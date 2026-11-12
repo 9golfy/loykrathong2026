@@ -1,0 +1,224 @@
+/* First viewport: reserve the measured navbar height, then compose one full scene. */
+.festival-page{position:relative;--festival-header-height:77px}
+.festival-page .festival-navbar{position:absolute;inset:0 0 auto;z-index:20;background:#031d4026;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom-color:#dfb75830}
+.festival-page .reference-hero#top{scroll-margin-top:var(--festival-header-height)}
+.festival-page .navbar-inner{height:76px;min-height:76px;justify-content:space-between}
+.festival-page .reference-hero.layered-hero{height:100svh;min-height:0;max-height:none;background:#071b50}
+.festival-page .layered-hero .hero-layout{height:100%;min-height:0;padding:calc(var(--festival-header-height) + clamp(26px,5svh,60px)) 0 clamp(200px,26svh,270px);align-items:start}
+.festival-page .layered-hero:after{z-index:1;background:linear-gradient(90deg,transparent 44%,#03174618 65%,#03174644);pointer-events:none}
+.festival-page .layered-hero .reference-hero-copy{position:relative;z-index:7;align-self:start;width:100%;max-width:530px;margin-inline:auto;padding:0;pointer-events:none}
+.festival-page .layered-hero .reference-hero-copy>:is(a,button){pointer-events:auto}
+.festival-page .layered-hero .hero-overline{font-size:10px;letter-spacing:.1em;margin-bottom:15px;color:#ead5aa}
+.festival-page .layered-hero .reference-hero-copy h1{font-family:var(--serif);font-size:clamp(42px,min(4.5vw,8svh),66px);font-weight:500;line-height:1.38;letter-spacing:-.035em;margin:0}
+.festival-page .layered-hero .hero-gold-ornament{width:80%;margin:12px auto 15px;gap:13px}
+.festival-page .layered-hero .hero-gold-ornament>svg{width:32px;height:24px}
+.festival-page .layered-hero .reference-hero-copy>p:not(.hero-overline){font-size:clamp(14px,1.25vw,17px);line-height:1.8;margin-bottom:21px}
+.festival-page .layered-hero .hero-event-button{min-height:49px;min-width:250px;padding:9px 25px;font-size:16px}
+/* The shoreline and both photo plates use the same source coordinates. */
+.festival-hero-layers{position:absolute;inset:0;container-type:size;pointer-events:none;isolation:isolate;overflow:hidden;background:#071b50;--scene-shift-x:-200px;--scene-shore:68cqh;--scene-height:max(calc(var(--scene-shore) / .691),calc((100cqh - var(--scene-shore)) / .309),calc(100cqw * 854 / 1280));--scene-width:calc(var(--scene-height) * 1280 / 854);--scene-offset-y:calc(var(--scene-shore) - var(--scene-height) * .691);--water-band-height:calc((100cqh - var(--scene-shore)) / 20)}
+.hero-sky-layer{position:absolute;inset:0;background:radial-gradient(ellipse at 28% 52%,#153d83,#071b50 70%);z-index:-3}
+.hero-stars-layer{position:absolute;inset:0;z-index:-2;pointer-events:none}
+.hero-stars-layer>span{position:absolute;display:block;border-radius:50%;background:#fff3ce;box-shadow:0 0 4px #ffefb788}
+.hero-moon-layer{position:absolute;right:4%;top:calc(var(--festival-header-height) + 7%);width:clamp(90px,8vw,150px);aspect-ratio:1;z-index:1;pointer-events:none;border-radius:50%;background:#ffd187;isolation:isolate}
+.hero-full-moon{position:relative;display:block;width:100%;height:100%;object-fit:contain;border-radius:50%;filter:grayscale(1) contrast(.85) brightness(1.15);mix-blend-mode:multiply;animation:hero-moon-light 6s ease-in-out infinite}
+.hero-moon-glow{position:absolute;inset:-45%;border-radius:50%;background:radial-gradient(circle,#ffdf8c33 10%,#ffe4a51c 35%,transparent 70%);animation:hero-moon-halo 6s ease-in-out infinite}
+@keyframes hero-moon-light{0%,100%{opacity:.9}50%{opacity:1}}
+@keyframes hero-moon-halo{0%,100%{opacity:.55;scale:.96}50%{opacity:.85;scale:1.04}}
+@media(min-width:761px) and (max-width:1200px){.hero-moon-layer{width:76px;right:20px;top:calc(var(--festival-header-height) + 24px)}}
+@media(max-width:760px){.hero-moon-layer{width:54px;right:18px;top:43%}}
+.hero-temple-layer{position:absolute;inset:0;z-index:0;clip-path:inset(0 0 calc(100% - var(--scene-shore)) 0);overflow:hidden}
+/* Mirror adjacent copies at the source edge, including every reflection band. */
+.hero-temple-strip{position:absolute;width:var(--scene-width);height:var(--scene-height);left:calc(50% + var(--scene-shift-x));top:var(--scene-offset-y);translate:-50% 0}
+.hero-clean-plate{position:absolute;max-width:none;width:100%;height:100%;left:0;top:0;object-fit:fill}
+.hero-water-layer{position:absolute;z-index:1;left:0;right:0;top:var(--scene-shore);bottom:0;overflow:hidden;background:#052358}
+.hero-water-band{position:absolute;left:-12px;width:calc(100% + 24px);height:calc(var(--water-band-height) + 1px);top:calc(var(--band) * var(--water-band-height));animation:hero-reflection-drift var(--band-duration) var(--band-delay) ease-in-out infinite alternate}
+.hero-water-strip{position:absolute;left:calc(50% + var(--scene-shift-x));top:0;width:var(--scene-width);height:100%;translate:-50% 0}
+.hero-water-tile{position:absolute;left:0;top:0;width:100%;height:100%;background:url('/images/hero-layers/wat-arun-water-photo.png') 0 calc(var(--water-photo-height,var(--scene-height)) * -.691 - var(--band) * var(--water-band-height)) / var(--scene-width) var(--water-photo-height,var(--scene-height)) no-repeat}
+.hero-temple-strip>.tile-left,.hero-water-strip>.tile-left{left:-100%;transform:scaleX(-1)}
+.hero-temple-strip>.tile-right,.hero-water-strip>.tile-right{left:100%;transform:scaleX(-1)}
+.hero-water-glow{position:absolute;inset:0;background:repeating-linear-gradient(178deg,transparent 0 18px,#b4d7f312 19px,transparent 20px 32px);opacity:.4;mix-blend-mode:screen;animation:hero-water-glimmer 8s ease-in-out infinite alternate}
+.hero-water-current{position:absolute;inset:-20px -80px;pointer-events:none;mix-blend-mode:screen;opacity:.3;mask-image:linear-gradient(transparent,#000 25%,#000);background:repeating-radial-gradient(ellipse 170px 13px at 30% 40%,transparent 0 17px,#ffe3a035 19px,transparent 22px 49px);animation:hero-current-flow 7s ease-in-out infinite alternate}
+.hero-water-current:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(176deg,transparent 0 25px,#bbdffc35 27px,transparent 29px 57px);animation:hero-current-flow 4.7s -2s ease-in-out infinite alternate-reverse}
+.hero-distant-krathongs{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  --float-scale:1.3;
+  --float-edge:72px;
+  --float-duration:120s;
+}
+.hero-distant-krathong{
+  position:absolute;
+  display:block;
+  left:var(--float-x);
+  /* Keep each raised float fully below the shoreline, with space between lanes. */
+  top:max(calc(var(--float-y) - 100px), calc(var(--float-size) * var(--float-scale) * .9 + var(--float-y) * .04));
+  width:calc(var(--float-size) * var(--float-scale));
+  translate:-50% -90%;
+  opacity:.78;
+  animation:
+    hero-distant-flow var(--float-duration) linear calc(-1 * var(--float-phase) * var(--float-duration)) infinite,
+    hero-distant-bob 5s ease-in-out var(--float-bob-delay) infinite;
+}
+.hero-distant-krathong>img{position:relative;display:block;width:100%;height:auto;z-index:1}
+.hero-distant-krathong:after{content:"";position:absolute;inset:86% -35% -20%;background:radial-gradient(ellipse at center,#ffcc6b8c,transparent 68%);transform:scaleY(.65)}
+@keyframes hero-distant-flow{
+  from{transform:translateX(calc(-1 * var(--float-x) - var(--float-edge)))}
+  to{transform:translateX(calc(100cqw - var(--float-x) + var(--float-edge)))}
+}
+@keyframes hero-distant-bob{50%{translate:-50% calc(-90% + 2px)}}
+@media(max-width:760px){
+  .hero-distant-krathongs{--float-scale:.91;--float-duration:50s}
+  .hero-distant-krathong:nth-child(3n){display:none}
+}
+@supports (animation-duration:calc(1px / 1px * 1s)){
+  /* Background floats move at 16px/s, half the minimum speed of user boats. */
+  .hero-distant-krathongs{--float-duration:calc((100cqw + 2 * var(--float-edge)) / 16px * 1s)}
+}
+@keyframes hero-current-flow{from{transform:translateX(-35px) scaleY(.97)}to{transform:translateX(35px) scaleY(1.03)}}
+.hero-fireworks-layer,.hero-lanterns-layer{position:absolute;inset:0;z-index:2;overflow:hidden}
+.hero-fireworks-layer,.hero-lanterns-layer{z-index:-1}
+.hero-firework{position:absolute;left:var(--effect-x);top:var(--effect-y);width:var(--effect-size);aspect-ratio:1;translate:-50% -50%}
+.hero-firework-burst{display:block;width:100%;height:100%;object-fit:contain;animation:hero-firework-bloom var(--effect-duration) var(--effect-delay) linear infinite;transform-origin:50% 50%}
+.hero-firework.is-pink .hero-firework-burst{filter:hue-rotate(290deg) saturate(.8)}
+.hero-firework-rocket{position:absolute;left:50%;top:50%;width:2px;height:90px;background:linear-gradient(transparent,#efaa3b 85%,#fff3ba);border-radius:50%;transform-origin:50% 100%;box-shadow:0 0 5px #ffc75a;animation:hero-firework-launch var(--effect-duration) var(--effect-delay) linear infinite}
+.hero-sky-lantern{position:absolute;left:var(--lantern-x);top:0;width:var(--lantern-size);aspect-ratio:2/3;animation:hero-lantern-rise var(--lantern-duration) var(--lantern-delay) linear infinite;filter:drop-shadow(0 0 6px #ffb84244)}
+.hero-sky-lantern>img{display:block;width:100%;height:100%;object-fit:contain;animation:hero-lantern-sway 6.5s var(--lantern-delay) ease-in-out infinite alternate}
+/* Foreground stays attached to the lower left, above the moving river. */
+.hero-foreground-group{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden;--couple-width:min(clamp(700px,53.2vw,840px),calc((100svh - var(--festival-header-height)) * 1.02));--couple-left:-12px;--couple-bottom:4px}
+.hero-couple-layer{position:absolute;z-index:4;left:var(--couple-left);bottom:var(--couple-bottom);width:var(--couple-width);filter:drop-shadow(0 8px 12px #00133833)}
+.hero-couple-layer>img{display:block;width:100%;height:auto}
+/* Enlarge the desktop foreground to fill the reference's lower-left frame. */
+@media(min-width:761px){
+  .hero-foreground-group{--couple-width:min(clamp(612.5px,46.55vw,735px),calc((100svh - var(--festival-header-height)) * .8925))}
+}
+.festival-page .layered-hero .krathong-river{z-index:4;height:306px;bottom:18px;clip-path:inset(0 0 0 max(0px,calc((100% - 1100px)/2)))}
+.festival-page .layered-hero .river-voyage{left:0;top:var(--lane);width:calc(196px + var(--boat-size-offset,0px));z-index:1;animation:none!important;visibility:hidden}
+.festival-page .layered-hero .river-boat{width:100%;transform:none;animation:river-individual-bob var(--bob-duration,3.4s) var(--bob-delay,0s) ease-in-out infinite}
+@keyframes river-individual-bob{0%,100%{translate:0 0;rotate:0deg}30%{translate:0 calc(var(--bob-height,5px) * -.65)}65%{translate:0 var(--bob-height,5px)}}
+.festival-page .layered-hero .river-boat-art{width:100%;height:calc(168px + var(--boat-size-offset,0px))}
+.festival-page .layered-hero .river-boat-label{
+  top:calc(151px + var(--boat-size-offset,0px));
+  font-size:20px;
+  line-height:1.4;
+  color:#fff1cd;
+  text-shadow:0 1px 3px #071925,0 2px 6px #071925;
+}
+.festival-page .layered-hero .river-heading{top:10px;bottom:auto;right:max(24px,calc((100% - 1100px)/2))}
+.festival-page .layered-hero .river-empty{left:55%;right:25px;top:120px;font-size:11px}
+.festival-page .layered-hero .hero-submission-status{bottom:325px;z-index:8}
+.is-scene-paused *{animation-play-state:paused!important}
+@keyframes hero-reflection-drift{from{transform:translateX(calc(0px - var(--band-drift)))}to{transform:translateX(var(--band-drift))}}
+@keyframes hero-water-glimmer{from{translate:-5px 0;opacity:.25}to{translate:5px 2px;opacity:.45}}
+@keyframes hero-firework-launch{0%{opacity:0;transform:translateY(180px) scaleY(.15)}4%{opacity:.8}17%{opacity:1;transform:translateY(0) scaleY(.65)}19%,100%{opacity:0;transform:translateY(0) scaleY(.1)}}
+@keyframes hero-firework-bloom{0%,17%{opacity:0;transform:scale(.02)}19%{opacity:.9;transform:scale(.12)}28%{opacity:1;transform:scale(.72)}42%{opacity:.8;transform:scale(1)}62%,100%{opacity:0;transform:translateY(14px) scale(1.12)}}
+@keyframes hero-lantern-rise{0%{opacity:0;transform:translate(0,var(--scene-shore))}8%{opacity:.85}80%{opacity:.8}100%{opacity:0;transform:translate(var(--lantern-drift),-100px)}}
+@keyframes hero-lantern-sway{from{rotate:-5deg}to{rotate:5deg}}
+@media(min-width:761px) and (max-height:780px){
+  .festival-page .layered-hero .hero-layout{padding-top:calc(var(--festival-header-height) + 25px);padding-bottom:185px}
+  .festival-page .layered-hero .reference-hero-copy h1{font-size:50px;line-height:1.3}
+  .festival-page .layered-hero .hero-overline{font-size:9px;margin-bottom:10px}
+  .festival-page .layered-hero .hero-gold-ornament{margin:8px auto 10px}
+  .festival-page .layered-hero .reference-hero-copy>p:not(.hero-overline){font-size:14px;line-height:1.7;margin-bottom:15px}
+  .festival-page .layered-hero .hero-event-button{min-height:45px;font-size:15px}
+  .festival-hero-layers{--scene-shore:72cqh}
+}
+@media(max-width:760px){
+  .festival-page{--festival-header-height:69px}
+  .festival-page .navbar-inner{height:68px;min-height:68px}
+  .festival-page .layered-hero .hero-layout{padding-top:calc(var(--festival-header-height) + 25px);padding-bottom:270px;align-items:start}
+  .festival-page .layered-hero .reference-hero-copy{width:100%;max-width:none;margin:0;align-self:start}
+  .festival-page .layered-hero .reference-hero-copy h1{font-size:36px;line-height:1.35}
+  .festival-page .layered-hero .hero-overline{font-size:8px;letter-spacing:.05em;margin-bottom:8px}
+  .festival-page .layered-hero .hero-gold-ornament{width:60%;margin:8px auto 10px}
+  .festival-page .layered-hero .hero-gold-ornament>svg{width:26px;height:21px}
+  .festival-page .layered-hero .reference-hero-copy>p:not(.hero-overline){font-size:12px;line-height:1.7;margin-bottom:15px}
+  .festival-page .layered-hero .hero-event-button{font-size:14px;min-width:220px;min-height:43px;padding:7px 20px}
+  .festival-hero-layers{--scene-shift-x:0px;--scene-shore:72cqh}
+  .hero-temple-strip{left:calc(50% + (var(--scene-width) - 100cqw) * .12 + var(--scene-shift-x))}
+  .hero-water-strip{left:calc(50% + (var(--scene-width) - 100cqw) * .12 + var(--scene-shift-x))}
+  .hero-firework{width:calc(var(--effect-size) * .55);top:calc(var(--effect-y) * .4);opacity:.85}
+  .hero-firework-rocket{height:55px}
+  .hero-sky-lantern{width:calc(var(--lantern-size) * .7)}
+  .hero-foreground-group{--couple-width:min(455px,calc((100svh - var(--festival-header-height)) * .85));--couple-left:-20px}
+  .festival-page .layered-hero .krathong-river{height:276px;bottom:12px}
+  .festival-page .layered-hero .river-voyage{left:0;width:calc(154px + var(--boat-size-offset,0px));top:var(--lane)}
+  .festival-page .layered-hero .river-boat{width:100%}
+  .festival-page .layered-hero .river-boat-art{width:100%;height:calc(140px + var(--boat-size-offset,0px))}
+  .festival-page .layered-hero .river-boat-label{top:calc(123px + var(--boat-size-offset,0px))}
+  .festival-page .layered-hero .river-heading{top:5px;bottom:auto;right:20px}
+  .festival-page .layered-hero .river-empty{left:54%;right:15px;top:100px;font-size:9px}
+  .festival-page .layered-hero .hero-submission-status{bottom:275px}
+}
+@media(max-width:760px) and (max-height:740px){
+  .festival-page .layered-hero .reference-hero-copy h1{font-size:30px}
+  .festival-page .layered-hero .hero-layout{padding-top:calc(var(--festival-header-height) + 17px)}
+  .festival-page .layered-hero .hero-overline{display:none}
+  .festival-page .layered-hero .hero-gold-ornament{margin:5px auto 7px}
+  .festival-page .layered-hero .reference-hero-copy>p:not(.hero-overline){font-size:11px;margin-bottom:10px}
+  .festival-hero-layers{--scene-shore:76cqh}
+}
+@media(max-width:370px){.hero-foreground-group{--couple-width:min(420px,calc((100svh - var(--festival-header-height)) * .85));--couple-left:-30px}}
+@media(prefers-reduced-motion:reduce){
+  .festival-hero-layers *,.hero-foreground-group *{animation:none!important}
+  .hero-firework-rocket{display:none}
+  .hero-firework-burst{opacity:.65;transform:none}
+  .hero-sky-lantern{top:12%;opacity:.7;transform:none}
+  .hero-sky-lantern:nth-child(2n){top:27%}
+  .hero-water-band{transform:none}
+}
+/* Official invitation and the highlighted cultural message. */
+.festival-page .layered-hero .hero-overline{font-size:17px;line-height:1.5;letter-spacing:0;color:#f5efdf;margin-bottom:6px}
+.hero-title-main{display:block;font-size:clamp(32px,3.4vw,49px);line-height:1.3}
+.hero-title-year{display:block;font-size:30px;font-weight:400;line-height:1.4;margin-top:0}
+.festival-page .layered-hero .reference-hero-copy>p.hero-tagline{color:#ffdb7b;font-family:var(--serif);font-size:26px;font-weight:600;line-height:1.4;margin:0}
+.hero-tagline>span{display:inline-block}
+.festival-page .layered-hero .hero-gold-ornament{margin:7px auto 9px}
+@media(max-width:760px){.festival-page .layered-hero .hero-overline{display:block;font-size:13px;line-height:1.8;margin-bottom:10px}.hero-title-main{font-size:34px;line-height:1.5}.hero-title-year{font-size:24px}.festival-page .layered-hero .reference-hero-copy>p.hero-tagline{font-size:20px}}
+@media(max-width:760px) and (max-height:740px){.festival-page .layered-hero .hero-overline{font-size:12px;margin-bottom:6px}.hero-title-main{font-size:30px}.hero-title-year{font-size:22px}.festival-page .layered-hero .reference-hero-copy>p.hero-tagline{font-size:18px}}
+@media(max-width:760px){
+  .festival-page .layered-hero .hero-overline{line-height:1.5;margin-bottom:5px}
+  .hero-title-main{line-height:1.3}
+  .festival-page .layered-hero .hero-gold-ornament{margin:5px auto 7px}
+  .festival-hero-layers{--scene-shore:74cqh;--scene-height:max(85cqh,calc(100cqw * 854 / 1280))}
+}
+
+@media(max-width:760px), (max-width:1024px) and (max-height:550px) and (orientation:landscape){
+  .festival-page .reference-hero.layered-hero{
+    --hero-art-space:clamp(300px,48svh,500px);
+    height:auto;
+    min-height:100svh;
+  }
+  .festival-page .layered-hero .hero-layout{
+    height:auto;
+    padding-bottom:var(--hero-art-space);
+  }
+  .festival-page .layered-hero .reference-hero-copy{grid-column:1/-1}
+
+  .festival-hero-layers{
+    --scene-shift-x:0px;
+    --scene-shore:max(74cqh,calc(100cqh - var(--hero-art-space) + 170px));
+    /* The spire is 34.7% of the photo height above the shoreline. */
+    --scene-height:min(max(53cqh,calc(100cqw * 854 / 1280)),calc((var(--scene-shore) - 100cqh + var(--hero-art-space) - 24px) / .347));
+    --water-photo-height:max(var(--scene-height),calc((100cqh - var(--scene-shore)) / .309));
+  }
+  .hero-moon-layer{width:clamp(34px,9vw,42px);top:max(54%,calc(100% - var(--hero-art-space) + 24px))}
+  .hero-foreground-group{
+    --couple-width:min(74vw,350px,calc((var(--hero-art-space) - 28px) * 4 / 3));
+    --couple-left:-16px;
+  }
+}
+
+@media(max-width:320px){
+  .festival-navbar .department-wordmark{font-size:12px}
+  .festival-navbar .navbar-inner{gap:6px}
+  .festival-header-controls{gap:5px}
+}
+
+
+
+
+
+.festival-page .layered-hero .river-read-hint{top:0;transform:translate(-50%,-80%);pointer-events:none}
+.festival-page .layered-hero .river-boat:is(:hover,:focus-visible) .river-read-hint{font-size:20px;line-height:1.4;padding:5px 12px}

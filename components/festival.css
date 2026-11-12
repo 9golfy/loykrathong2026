@@ -1,0 +1,307 @@
+/* Public homepage: full-width sections share an 1100px, 12-column content grid. */
+.festival-page{--festival-navy:#061f43;--festival-gold:#efb83e;--festival-cream:#f7efe3;--festival-text:#101d3a;--festival-gold-button-fill:linear-gradient(#fff3c6,#f2bd47 67%,#e6a82d);background:var(--festival-cream);color:var(--festival-text);font-family:var(--sans)}
+.festival-container{width:min(1100px,calc(100% - 48px));margin-inline:auto}
+.festival-page :is(#top,#meaning,#wishes,#events,#event-news){scroll-margin-top:24px}
+.festival-page button,.festival-page a{-webkit-tap-highlight-color:transparent}
+.festival-page :is(a,button,summary,select):focus-visible{outline:3px solid #edac21;outline-offset:5px}
+.festival-page .gold-button{display:inline-flex;align-items:center;justify-content:center;gap:16px;min-height:48px;padding:10px 25px;border:1px solid #b87c11;border-radius:30px;background:var(--festival-gold-button-fill);box-shadow:0 3px 0 #95620c,0 5px 12px #0002;color:#21190e;font:700 15px/1.6 var(--sans);text-decoration:none;cursor:pointer;transition:filter .2s,transform .2s}
+.festival-page .gold-button:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.gold-button>span:last-child{font-size:24px;line-height:1}.gold-button>svg{width:30px;height:23px;stroke:currentColor;stroke-width:2;flex:none}
+.festival-navbar{background:linear-gradient(105deg,#031d40,#082e59 60%,#031c38);border-bottom:1px solid #dfb7586b;color:#fff}
+.navbar-inner{min-height:86px;display:flex;align-items:center;gap:24px}
+.festival-brand{display:flex;align-items:center;gap:14px;flex:none;text-decoration:none;color:#fff;font:500 21px var(--serif);white-space:nowrap}
+.department-emblem{position:relative;display:block;width:52px;height:52px;overflow:hidden;border-radius:50%;flex:none;filter:drop-shadow(0 2px 6px #0004)}
+.department-emblem img{position:absolute;top:0;left:0;width:208px;max-width:none;height:52px}
+.desktop-navigation{display:flex;align-items:stretch;justify-content:space-between;gap:20px;flex:1;border-left:1px solid #ffffff60;padding-left:24px;align-self:stretch}
+.desktop-navigation>a{display:flex;align-items:center;position:relative;text-decoration:none;color:#e7e9f3;font-size:12px;white-space:nowrap}
+.desktop-navigation>a:hover,.desktop-navigation>.nav-home{color:#ffc64a}.desktop-navigation>.nav-home:after{content:'';position:absolute;left:0;right:0;bottom:18px;height:2px;background:#ffc64a}
+.festival-page .nav-create{font-size:12px;padding:8px 17px;min-height:40px;gap:7px;white-space:nowrap}.nav-create>svg{width:22px;height:18px}
+.mobile-navigation{display:none}
+.festival-header-controls{position:relative;display:flex;align-items:center;gap:12px;flex:none;margin-left:auto}
+.festival-header-controls :is(.fullscreen-toggle,.music-toggle){display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:9px 16px;border:1px solid #e8c88966;border-radius:24px;background:#ffffff08;color:#f8d58a;font:500 12px/1.6 var(--sans);white-space:nowrap;cursor:pointer}
+.festival-header-controls :is(.fullscreen-toggle,.music-toggle):hover{background:#ffffff14}
+.festival-header-controls :is(.fullscreen-toggle,.music-toggle):disabled{opacity:.5;cursor:default}
+.festival-header-controls button>svg{flex:none}
+.header-control-error:not(:empty){position:absolute;right:0;top:calc(100% + 8px);padding:12px;width:240px;background:#06274d;color:#fff4df;border:1px solid #e8c88966;border-radius:10px;z-index:20;font-size:12px}
+@media(max-width:760px){.festival-header-controls{gap:8px}.festival-header-controls :is(.fullscreen-toggle,.music-toggle){width:38px;min-height:38px;height:38px;padding:8px}.festival-header-controls button>span{display:none}.festival-navbar .navbar-inner{gap:10px}}
+.reference-hero{position:relative;min-height:610px;isolation:isolate;overflow:hidden;background:#05214e;color:#fff}
+.reference-hero-art{object-fit:cover;object-position:center 62%;z-index:-2}
+.reference-hero:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,transparent 40%,#0321522b 65%,#031d4538),linear-gradient(0deg,#031b3933,transparent 45%);pointer-events:none}
+.hero-layout{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;min-height:610px;align-items:center;padding-block:48px}
+.reference-hero-copy{grid-column:7/-1;text-align:center;padding-bottom:10px;text-shadow:0 3px 15px #001533}
+.hero-overline{font:10px var(--sans);letter-spacing:.08em;color:#f5dca3;margin-bottom:15px}
+.festival-page .reference-hero h1{font:500 clamp(50px,4.8vw,72px)/1.5 var(--serif);letter-spacing:-.04em;margin:0;color:white}
+.festival-page .reference-hero h1 em{color:#ffdb7b;font-weight:500;font-style:normal}
+.hero-gold-ornament{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto 20px;width:85%;color:#f6be46}
+.hero-gold-ornament>span{height:1px;flex:1;background:linear-gradient(90deg,transparent,#fbc954)}.hero-gold-ornament>span:last-child{transform:rotate(180deg)}.hero-gold-ornament>svg{width:40px;height:30px;stroke:currentColor;stroke-width:1.7}
+.reference-hero-copy>p:not(.hero-overline){font:500 19px/1.85 var(--serif);margin-bottom:24px;color:#fff4df}
+.festival-page .hero-event-button{min-width:250px;font-size:18px;text-shadow:none}.hero-event-button>span:first-child{font-size:28px}
+.tradition-section{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 8% 90%,#1c478066,transparent 55%),radial-gradient(ellipse at 85% 10%,#17397055,transparent 55%),linear-gradient(125deg,#0d2857,#081c40);border-bottom:1px solid #e8c17033;color:#fff1d4}
+.tradition-content{position:relative;text-align:center;padding-block:50px 55px;z-index:1}
+.section-ornament{display:flex;align-items:center;justify-content:center;gap:15px;color:#b87a19}.section-ornament>span{height:1px;width:65px;background:linear-gradient(90deg,transparent,#ca8c27)}.section-ornament>span:last-child{transform:rotate(180deg)}.section-ornament>svg{width:33px;height:27px;stroke:currentColor;stroke-width:1.6;flex:none}.section-ornament>p{font:700 23px var(--serif);margin:0}
+.festival-page .tradition-content>h2{font:700 34px/1.6 var(--serif);margin:16px 0 15px;letter-spacing:-.025em}
+.tradition-content>p{position:relative;font:500 14px/1.95 var(--sans);max-width:780px;margin:0 auto 24px;z-index:1}
+.tradition-content>.gold-button{font-size:17px;position:relative;z-index:2;min-width:320px}
+.tradition-krathong{position:absolute;right:-75px;bottom:10px;width:240px;height:220px;object-fit:contain;z-index:-1;opacity:.9;filter:drop-shadow(0 10px 10px #dba93355)}
+.tradition-waves{position:absolute;inset:auto -10% -110px;height:200px;z-index:0;border-radius:50%;background:repeating-radial-gradient(ellipse at 25% 100%,transparent 0 9px,#dba55338 10px 11px,transparent 12px 17px);transform:rotate(-3deg);pointer-events:none}
+.reference-wishes{padding-block:58px 60px;background:radial-gradient(ellipse at 50% 5%,#fffaf2,#f5ecdf);text-align:center}
+.festival-page .section-ornament>h2{font:700 35px/1.6 var(--serif);color:#101d3a;margin:0;letter-spacing:-.02em}
+.section-description{font:500 14px/1.9 var(--sans);margin:10px 0 30px;color:#26314b}.wish-feed-status{font:500 16px/1.75 var(--sans);color:#26314b;margin:0 0 20px}
+.reference-wish-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;text-align:center}
+.wish-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.wish-pagination button {
+  min-width: 40px;
+  min-height: 40px;
+  border: 1px solid #ba8b3c;
+  border-radius: 10px;
+  background: #fff8e8;
+  color: #142849;
+  font: 700 15px var(--sans);
+  cursor: pointer;
+}
+.wish-pagination button:is([aria-current="page"], :hover:not(:disabled)) {
+  background: linear-gradient(#ffedb7, #e7b045);
+}
+.wish-pagination button:disabled:not([aria-current="page"]) { opacity: .45; cursor: default; }
+.wish-pagination-error { margin: 0 0 16px; }
+.wish-pagination-error button { color: inherit; text-decoration: underline; cursor: pointer; }
+.reference-wish-card{position:relative;min-height:235px;padding:15px 24px 24px;border:1px solid #56718d;border-radius:14px;background:radial-gradient(ellipse at 50% 15%,#114c7c,#042547 66%,#021a35);color:white;overflow:hidden;box-shadow:0 5px 15px #0623480c}
+.reference-wish-card:after{position:absolute;content:'';left:20%;right:20%;top:120px;height:2px;background:linear-gradient(90deg,transparent,#f6c44a88,transparent);box-shadow:0 8px 15px #f6c44a3b;pointer-events:none}
+.reference-wish-card>img{width:155px;height:125px;object-fit:contain;display:block;margin:0 auto 4px;filter:drop-shadow(0 0 9px #ffdb7320)}
+.reference-wish-card>blockquote{font:500 18px/1.75 var(--serif);margin:0;overflow-wrap:anywhere}.reference-wish-card>p{font-size:14px;color:#d9cda9;margin:12px 0 0;overflow-wrap:anywhere}
+.festival-page .wish-create-button{margin-top:30px;background:linear-gradient(#fffdf7,#f6e3ba);min-width:320px;box-shadow:0 2px 0 #b9822d,0 4px 8px #0001}
+.reference-live-river{height:270px;position:relative;margin-top:30px;border-radius:18px;background:#06274a;overflow:hidden;color:#fff}.reference-live-river .krathong-river{bottom:0;height:230px}.reference-launch-notice{position:relative;z-index:10;padding:12px;font-size:12px}
+.destination-section{position:relative;isolation:isolate;background:radial-gradient(ellipse at 15% 30%,#0d4384,transparent 48%),linear-gradient(120deg,#042450,#061c3e);color:#fff;padding-block:56px 38px;overflow:hidden;border-bottom:1px solid #e3b545}
+.destination-section:before{content:'';position:absolute;inset:0;z-index:-1;background:url('/images/festival-hero-2569.png') center bottom/cover;opacity:.12;mask-image:linear-gradient(90deg,#000,transparent 70%);pointer-events:none}
+.destination-section:after{content:'';position:absolute;left:-10%;right:-10%;bottom:-45px;height:100px;border-radius:50%;background:repeating-radial-gradient(ellipse at 40% 100%,transparent 0 7px,#eec66755 8px 9px,transparent 10px 15px);pointer-events:none}
+.destination-heading{display:flex;align-items:center;justify-content:center;gap:20px;text-align:center}.destination-heading>svg{width:67px;height:52px;stroke:#f6ca5a;stroke-width:1.6;filter:drop-shadow(0 0 6px #f7b83340)}
+.festival-page .destination-heading h2{font:600 40px/1.5 var(--serif);color:#ffe29b;letter-spacing:-.02em;margin:0}.destination-heading p{font:400 15px/1.8 var(--sans);color:#f4e9cd;margin:8px 0 0}
+.event-toolbar{display:flex;justify-content:flex-end;align-items:center;gap:18px;margin:25px 0 22px}.region-filter{display:flex;align-items:center;gap:8px;background:#fff1d3;color:#4b330d;padding:3px 14px;border:1px solid #d9aa4e;border-radius:25px}.region-filter>span{font-size:20px}.region-filter select{border:0;background:transparent;max-width:230px;min-height:33px;color:#3b2d18;font:600 12px var(--sans);cursor:pointer}.event-total{border:1px solid #e8ae25;border-radius:25px;color:#ffce63;padding:6px 18px;font:600 14px var(--sans)}
+.destination-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;align-items:start}.map-column{grid-column:span 4}.province-grid{grid-column:span 8;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.thailand-map{width:100%;max-width:300px;aspect-ratio:390/680;position:relative;margin:0 auto;filter:drop-shadow(0 0 18px #f4b94614)}.map-outline{width:100%;height:100%;display:block}
+.map-pin{position:absolute;width:31px;height:39px;padding:0;border:0;background:none;cursor:pointer;transform:translate(-50%,-100%);z-index:1;filter:drop-shadow(0 0 5px #ffb521)}.map-pin>svg{width:100%;height:100%;overflow:visible}.map-pin svg>path{fill:#ef9d13;stroke:#fff4c4;stroke-width:2}.map-pin svg>circle{fill:#fff8e6}.map-pin>span{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:#fff3d5;color:#1c2b40;padding:4px 9px;border-radius:5px;font:600 11px var(--sans);white-space:nowrap;opacity:0;pointer-events:none}.map-pin.is-active{z-index:3;filter:drop-shadow(0 0 10px #ffb521);scale:1.18}.map-pin.is-active>span,.map-pin:hover>span,.map-pin:focus-visible>span{opacity:1}
+.map-selection{display:flex;flex-direction:column;gap:6px;border-top:1px solid #e9c57b55;padding:16px 8px 0;min-height:130px;text-align:center}.map-selection-label{color:#d8c292;font-size:10px}.map-selection>strong{font:600 21px var(--serif);color:#ffe3a4}.map-selection>span:not(.map-selection-label){font-size:11px;line-height:1.7}.map-selection>button{align-self:center;background:none;border:0;color:#ffd782;font:500 11px var(--sans);padding:8px;cursor:pointer}.map-selection>button>span{padding-left:10px}.map-hint{text-align:center;color:#b8c5d4;font-size:10px;margin:10px 0 0}
+.province-card{scroll-margin-block:25px;display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;min-height:205px;padding:12px;background:linear-gradient(120deg,#fffaf0,#f4e7c9);border:2px solid #d6a643;border-radius:20px;box-shadow:0 4px 0 #c7953e33;color:#0a1d39;transition:border-color .2s,box-shadow .2s;min-width:0}
+.province-card.is-active{border-color:#ffce5c;box-shadow:0 0 0 3px #eab13b3b,0 7px 20px #0002}.province-photo{background-image:url('/images/festival-provinces-atlas.png');background-size:300% 200%;background-repeat:no-repeat;background-color:#0b345b;border-radius:12px;min-width:0;height:100%;min-height:150px}
+.province-content{display:flex;flex-direction:column;min-width:0;align-items:flex-start}.province-region{font-size:9px;color:#967125;line-height:1.7}.province-card h3{font:700 21px/1.45 var(--serif);margin:1px 0 5px;letter-spacing:-.04em;overflow-wrap:anywhere}.province-event-name{font:600 11px/1.7 var(--sans);margin:0 0 8px}.event-meta{display:flex;align-items:flex-start;gap:7px;font:500 10px/1.65 var(--sans);margin:0 0 5px}.event-meta>span{color:#b68125;font-size:14px;line-height:1.25;flex:none}
+.event-detail-button{align-self:flex-end;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #bc8827;border-radius:20px;background:linear-gradient(#fff3c6,#edbb4f);color:#2f210e;padding:4px 12px;font:700 10px var(--sans);margin-top:auto;cursor:pointer;min-height:28px}.event-detail-button>span{font-size:20px;line-height:1}.event-detail-button:hover{background:#ffe59f}
+.event-source-note{position:relative;z-index:1;margin:28px 0 0;font:10px/1.8 var(--sans);color:#ced7e5;text-align:right}
+.festival-page .reference-footer{display:block;background:linear-gradient(100deg,#031b3b,#092c57);border:0;padding:0;color:#fff}.footer-inner{--footer-label-size:19px;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:112px;flex-wrap:wrap;padding-block:25px}.footer-inner>.festival-brand{font-size:var(--footer-label-size)}
+.festival-footer-title{color:#ffcf55;font:700 var(--footer-label-size)/1.5 var(--serif);text-align:right;margin-inline-start:auto;text-wrap:balance}
+.event-dialog{position:fixed;padding:0;width:min(540px,calc(100vw - 32px));max-height:calc(100dvh - 40px);border:1px solid #d6ab51;border-radius:20px;background:#fff8e9;color:#132443;overflow:auto;overscroll-behavior:contain;box-shadow:0 25px 100px #0006}.event-dialog::backdrop{background:#00132bcc;backdrop-filter:blur(4px)}.event-dialog-photo{height:240px;min-height:0;border-radius:0}.event-dialog-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:#fff8e9;border:1px solid #d6ab51;color:#132443;font:26px/1 var(--sans);cursor:pointer}.event-dialog-body{padding:25px 28px 30px}.event-dialog h2{font:700 26px/1.65 var(--serif);margin:8px 0 15px}.event-dialog-body>p{font:12px/2 var(--sans);color:#566176}.event-dialog dl{display:grid;grid-template-columns:90px 1fr;gap:10px;font-size:12px;line-height:1.8;margin:20px 0}.event-dialog dt{font-weight:700}.event-dialog dd{margin:0}.event-dialog .event-reference-notice{font-size:10px;background:#f2e6cd;padding:12px;border-radius:8px}.event-dialog .gold-button{width:100%;margin-top:10px;font-size:12px}
+.festival-page .creator-dialog{background:#fff8ec;color:#132443;border:1px solid #d6ab51}.festival-page .creator-close{background:#fff8ec;color:#132443}.festival-page .creator-content input:not([type=checkbox]),.festival-page .creator-content textarea{background:#fffdfa;border-color:#d5cab3}.festival-page .creator-design-grid>button{background:#f2eddf}.festival-page .creator-submit{background:linear-gradient(#ffdc82,#eab144);color:#241d12}.festival-page .creator-submit:hover{background:#ffdb89}
+@media(min-width:1200px){.map-column{grid-column:span 4;padding-right:25px}.destination-grid{grid-template-columns:310px minmax(0,1fr)}.map-column,.province-grid{grid-column:auto}}
+@media(max-width:1199px){.navbar-inner{gap:18px}.festival-brand{font-size:18px}.desktop-navigation{gap:14px;padding-left:18px}.desktop-navigation>a{font-size:10px}.festival-page .nav-create{padding-inline:12px;font-size:11px}.province-card{grid-template-columns:90px minmax(0,1fr);gap:11px}.province-card h3{font-size:18px}.province-grid{gap:14px}.province-photo{min-height:170px}}
+@media(max-width:1000px){.desktop-navigation{display:none}.navbar-inner{justify-content:space-between}.festival-page .nav-create{margin-left:auto}.mobile-navigation{display:block;position:relative}.mobile-navigation>summary{list-style:none;color:#f9d27d;font-size:25px;cursor:pointer;padding:5px}.mobile-navigation>summary::-webkit-details-marker{display:none}.mobile-navigation>nav{position:absolute;right:0;top:45px;width:230px;background:#06274d;border:1px solid #d6ab51;border-radius:10px;z-index:20;padding:12px;box-shadow:0 10px 25px #0005}.mobile-navigation nav>a{display:block;color:#fff4db;text-decoration:none;font:13px/1.8 var(--sans);padding:10px}.reference-hero,.hero-layout{min-height:570px}.festival-page .reference-hero h1{font-size:53px}.reference-hero-copy>p:not(.hero-overline){font-size:16px}.destination-grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:20px}.map-column{grid-column:span 4}.province-grid{grid-column:span 8;grid-template-columns:1fr}.province-card{grid-template-columns:140px minmax(0,1fr);min-height:190px}.province-card h3{font-size:23px}.province-photo{min-height:160px}.thailand-map{position:relative}.province-event-name{font-size:12px}.event-meta{font-size:11px}.event-detail-button{font-size:11px}.reference-wish-card{padding-inline:18px}.reference-wish-card>blockquote{font-size:16px}.tradition-krathong{right:-55px;width:170px;opacity:.35}}
+@media(max-width:760px){.festival-container{width:calc(100% - 40px)}.navbar-inner{min-height:76px;gap:12px}.festival-brand{font-size:16px;gap:9px}.department-emblem{width:40px;height:40px}.department-emblem img{width:160px;height:40px}.festival-page .nav-create{min-height:34px;padding:5px 10px;font-size:10px;gap:4px}.nav-create>svg{display:none}.mobile-navigation>summary{font-size:22px;padding:4px}.reference-hero{min-height:730px}.reference-hero-art{object-position:27% center}.reference-hero:after{background:linear-gradient(180deg,#031c4c99,transparent 70%),linear-gradient(0deg,#031b3a22,transparent)}.hero-layout{min-height:730px;align-items:start;padding-top:37px;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.reference-hero-copy{grid-column:1/-1;padding:0;text-shadow:0 2px 12px #001337}.hero-overline{font-size:8px;margin-bottom:8px}.festival-page .reference-hero h1{font-size:46px;line-height:1.45}.hero-gold-ornament{width:65%;margin:4px auto 10px}.hero-gold-ornament>svg{width:28px;height:22px}.reference-hero-copy>p:not(.hero-overline){font-size:13px;line-height:1.7;margin-bottom:18px}.festival-page .hero-event-button{font-size:15px;min-width:220px;min-height:43px}.tradition-content{padding-block:38px 43px}.section-ornament{gap:10px}.section-ornament>span{width:25px}.section-ornament>svg{width:27px;height:24px}.section-ornament>p{font-size:20px}.festival-page .tradition-content>h2{font-size:26px;line-height:1.7;margin:15px 0}.tradition-content>p{font-size:12px;line-height:2}.desktop-break{display:none}.tradition-content>.gold-button{min-width:0;width:100%;font-size:14px;gap:10px}.tradition-krathong{display:none}.reference-wishes{padding-block:38px 43px}.festival-page .section-ornament>h2{font-size:25px;line-height:1.7}.reference-wishes .section-ornament>span{display:none}.reference-wishes .section-ornament{gap:8px}.reference-wishes .section-ornament>svg{width:25px}.section-description{font-size:12px;margin:12px auto 23px;max-width:340px}.reference-wish-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.reference-wish-card{min-height:220px;padding:10px 13px 20px;border-radius:12px}.reference-wish-card>img{width:125px;height:105px;max-width:100%}.reference-wish-card:after{top:102px}.reference-wish-card>blockquote{font-size:13px;line-height:1.9}.festival-page .wish-create-button{width:100%;min-width:0;font-size:14px;margin-top:24px}.destination-section{padding-block:40px 30px}.destination-heading{gap:8px;align-items:flex-start}.destination-heading>svg{width:36px;height:32px;margin-top:5px}.festival-page .destination-heading h2{font-size:28px;line-height:1.7}.destination-heading p{font-size:12px;line-height:1.8;margin-top:5px}.event-toolbar{justify-content:center;gap:10px;margin:24px 0}.region-filter{padding-inline:10px}.region-filter select{font-size:11px;max-width:200px}.event-total{font-size:12px;white-space:nowrap;padding-inline:13px}.destination-grid{grid-template-columns:1fr;gap:25px}.map-column,.province-grid{grid-column:auto}.map-column{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px;align-items:center;padding:15px;border:1px solid #e6b94c44;border-radius:16px;background:#021d3d44}.thailand-map{max-width:170px;width:100%}.map-pin{width:23px;height:30px}.map-pin>span{font-size:9px;bottom:calc(100% + 4px);padding:3px 6px}.map-selection{padding:0;border-top:0;text-align:left;min-height:0}.map-selection>strong{font-size:22px}.map-selection>button{align-self:flex-start;padding-inline:0;text-align:left}.map-hint{grid-column:1/-1;margin:0;font-size:9px}.province-grid{grid-template-columns:1fr;gap:16px}.province-card{grid-template-columns:115px minmax(0,1fr);gap:14px;padding:12px;min-height:200px;border-radius:17px}.province-card h3{font-size:23px}.province-photo{min-height:170px}.province-event-name{font-size:11px}.event-meta{font-size:10px}.event-detail-button{font-size:11px;padding:5px 12px}.event-source-note{text-align:center;font-size:9px;line-height:1.9;margin-top:25px}.footer-inner{--footer-label-size:17px;display:grid;grid-template-columns:1fr auto;gap:20px;min-height:0;padding-block:30px}.footer-inner>.festival-brand{grid-column:1/-1}.event-dialog-photo{height:210px;min-height:0}.event-dialog-body{padding:20px}.event-dialog h2{font-size:23px}.event-dialog dl{grid-template-columns:75px 1fr;font-size:11px}.festival-page .creator-mobile-navigation{background:#fff8ec}}
+@media(max-width:370px){.festival-container{width:calc(100% - 28px)}.festival-brand{font-size:14px}.department-emblem{width:34px;height:34px}.department-emblem img{width:136px;height:34px}.festival-page .nav-create{font-size:9px;padding-inline:8px}.navbar-inner{gap:8px}.festival-page .reference-hero h1{font-size:41px}.province-card{grid-template-columns:95px minmax(0,1fr);gap:10px}.province-card h3{font-size:20px}.reference-wish-card>blockquote{font-size:12px}.festival-page .section-ornament>h2{font-size:22px}.festival-page .destination-heading h2{font-size:25px}.region-filter select{max-width:170px}}
+@media(prefers-reduced-motion:reduce){.festival-page *{scroll-behavior:auto;transition:none}}
+/* Supplied photographs with a lateral, constant-size river in the foreground. */
+.reference-hero,.reference-hero .hero-layout{min-height:660px}
+.reference-hero-art{object-position:center 72%}
+.reference-hero-art.scene-2{object-position:center bottom}
+.reference-hero:after{background:linear-gradient(90deg,transparent 30%,#00193833 60%,#00163866),linear-gradient(0deg,#001c3d30,transparent 35%)}
+.reference-hero .hero-layout{padding-top:60px;padding-bottom:155px}
+.hero-scenes{position:absolute;z-index:6;top:23px;left:max(24px,calc((100% - 1100px)/2));display:flex;align-items:center;gap:7px;color:#e4d6b4}
+.hero-scenes>span{font-size:9px;margin-right:5px}.hero-scenes>button{border:1px solid #cfb47855;border-radius:16px;background:#00162c99;color:#d9d8cd;min-height:29px;padding:4px 12px;font:10px var(--sans);cursor:pointer}.hero-scenes>button[aria-pressed=true]{background:#f6d68d;color:#352812;border-color:#f6d68d}
+.reference-hero-couple{position:absolute;z-index:3;bottom:2px;left:max(0px,calc((100% - 1200px)/2));width:360px;pointer-events:none}.reference-hero-couple>img{display:block;width:100%;height:auto}
+.reference-hero .krathong-river{position:absolute;inset:auto 0 0;height:180px;background:none;border:0;z-index:4;container-type:inline-size}
+.reference-hero .river-heading{inset:0 max(24px,calc((100% - 1100px)/2)) auto auto;gap:10px}
+.reference-hero .river-heading>span{display:none}.reference-hero .river-heading>button{font-size:9px;background:#001a3e99;border-color:#eac67455;min-height:32px;color:#f8e5b8}
+.reference-hero .river-moon-trail{display:none}.reference-hero .river-voyage{left:-150px;top:var(--lane);width:140px;animation-name:festival-river-horizontal;animation-timing-function:linear}
+.reference-hero .river-boat{width:140px;transform:none;animation:festival-river-bob 3.4s ease-in-out infinite}.reference-hero .river-boat-art{width:140px;height:120px;object-fit:contain}.reference-hero .river-boat-label{top:108px;font-size:10px}.reference-hero .river-read-hint{font-size:8px;top:8px;padding:4px 8px}
+.reference-hero .river-empty{inset:55px 20px auto 42%;font:12px/2 var(--sans);text-shadow:0 1px 5px #000;color:#f8e9c5}.reference-hero .river-empty>button{font-size:11px}.hero-submission-status{position:absolute;bottom:190px;right:max(24px,calc((100% - 1100px)/2));z-index:7;color:#ffdfa0;background:#061f43dd;padding:10px 16px;border:1px solid #cca548;border-radius:20px;font-size:11px}
+@keyframes festival-river-horizontal{from{transform:translateX(0)}to{transform:translateX(calc(100cqw + 300px))}}
+@keyframes festival-river-bob{0%,100%{translate:0 0;rotate:-1deg}50%{translate:0 -3px;rotate:1deg}}
+@media(max-width:760px){.reference-hero,.reference-hero .hero-layout{min-height:810px}.reference-hero .hero-layout{padding-top:85px;padding-bottom:310px}.reference-hero-art{object-position:40% center}.reference-hero-art.scene-2{object-position:53% center}.reference-hero:after{background:linear-gradient(180deg,#00193888,transparent 65%),linear-gradient(0deg,#00163822,transparent)}.hero-scenes{top:18px;left:20px;right:20px;gap:6px;flex-wrap:wrap}.hero-scenes>span{font-size:8px;width:100%;margin:0}.hero-scenes>button{font-size:9px;min-height:27px;padding:4px 11px}.reference-hero-couple{width:240px;left:-25px;bottom:4px}.reference-hero .krathong-river{height:150px}.reference-hero .river-heading{top:0;right:20px}.reference-hero .river-voyage,.reference-hero .river-boat{width:110px}.reference-hero .river-voyage{left:-120px}.reference-hero .river-boat-art{width:110px;height:100px}.reference-hero .river-boat-label{top:88px;font-size:8px}.reference-hero .river-empty{left:42%;right:15px;top:42px;font-size:9px}.hero-submission-status{bottom:160px;left:20px;right:20px;font-size:10px;text-align:center}}
+@media(prefers-reduced-motion:reduce){.reference-hero .river-voyage{animation:none;left:clamp(0px,var(--still-position),calc(100% - 140px));transform:none}.reference-hero .river-boat{animation:none}.reference-hero .river-voyage:nth-child(n+7){display:none}}
+/* Keep destination information readable without compressing the event cards. */
+@media(min-width:1200px){.province-card{min-height:230px;grid-template-columns:112px minmax(0,1fr)}.province-card h3{font-size:23px}.province-event-name{font-size:12px}.event-meta{font-size:12px;line-height:1.7}.event-detail-button{font-size:11px;min-height:31px}.province-region{font-size:10px}}
+/* The Thai line determines the wordmark width; the English line fits that width. */
+.department-wordmark{position:relative;display:block;padding-bottom:.7em;font-size:inherit;font-weight:600;line-height:1.5;letter-spacing:0}
+.department-wordmark-thai{display:block;white-space:nowrap}
+.department-wordmark-english{position:absolute;left:0;right:0;bottom:0;display:block;font-family:Arial,Helvetica,sans-serif;font-size:.43em;font-weight:600;line-height:1.4;letter-spacing:0;white-space:nowrap;text-align:justify;text-align-last:justify;color:#e5e9ee}
+@media(max-width:760px){.festival-navbar .department-wordmark{font-size:15px}}
+@media(max-width:370px){.festival-navbar .department-wordmark{font-size:14px}}
+.festival-entry-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  width: min(100%, 466px);
+  gap: clamp(10px, 2vw, 20px);
+  margin: clamp(12px, 2svh, 20px) auto 0;
+}
+.festival-entry-layout > :is(a, button) { pointer-events: auto; }
+.festival-map-banner,
+.festival-online-entry {
+  overflow: hidden;
+  border: 2px solid #e9b953;
+  border-radius: 10px;
+  box-shadow: 0 14px 32px #04112755;
+  transition: border-color .2s, box-shadow .2s;
+}
+.festival-map-banner { display: block; }
+:is(.festival-map-banner, .festival-online-entry):hover { border-color: #ffdc83; box-shadow: 0 14px 32px #04112755, 0 0 14px #ffcf5540; }
+.festival-map-banner > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.festival-online-entry {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+  gap: clamp(5px, 1.4vw, 12px);
+  width: 100%;
+  padding: 4px 8px;
+  background: var(--festival-gold-button-fill);
+  color: #21190e;
+  text-shadow: none;
+  cursor: pointer;
+}
+.festival-online-icon {
+  display: block;
+  flex: none;
+  width: clamp(34px, 5vw, 54px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.festival-online-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: 700 clamp(13px, 2.8vw, 16px)/1.35 var(--serif);
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .festival-entry-layout { width: min(100%, 370px); }
+  .festival-footer-title { grid-column: 1 / -1; }
+}
+
+/* Expanded festival directory: keep the map separate from the paginated results. */
+.event-toolbar{flex-wrap:wrap}
+.event-results{grid-column:span 8;min-width:0}
+.event-results>.province-grid{grid-column:auto}
+.event-pagination{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px;color:#ffe2a0;font:13px var(--sans)}
+.event-pagination button{border:1px solid #d9aa4e;border-radius:22px;background:#fff1d3;color:#4b330d;padding:9px 15px;font:600 12px var(--sans);cursor:pointer}
+.event-pagination button:disabled{opacity:.4;cursor:default}
+.province-photo.event-art-placeholder{background-image:radial-gradient(ellipse at 50% 65%,#dca83733,transparent 60%),linear-gradient(150deg,#123e70,#031b3b);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#f5ce78;text-align:center}
+.event-art-placeholder>svg{width:60%;max-width:100px;height:auto;stroke:currentColor;stroke-width:1.2;filter:drop-shadow(0 0 10px #eebf5a55)}
+.event-art-placeholder>span{font:600 13px/1.8 var(--sans)}
+.province-event-name,.event-meta{overflow-wrap:anywhere}
+.event-dialog-body>p{line-height:1.9}
+@media(min-width:1200px){.event-results{grid-column:auto}}
+@media(max-width:760px){.event-results{grid-column:auto}.region-filter{max-width:100%}.region-filter select{max-width:230px}.event-pagination{gap:10px;font-size:11px}.event-pagination button{font-size:11px;padding:9px 12px}}
+.map-pin-connectors{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;stroke:#ffe4a1;stroke-width:1;opacity:.6}
+.map-pin{width:24px;height:30px}
+@media(max-width:760px){.map-pin{width:14px;height:18px}}
+/* The selected krathong and its wish share the supplied Thai gold frame. */
+.wish-dialog{width:min(940px,calc(100vw - 32px));max-height:calc(100dvh - 32px);border:2px solid #d7a149;background:linear-gradient(135deg,#061630,#0b2850);color:#fff5dc;border-radius:24px}
+.wish-dialog-content{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;align-items:center;padding:22px}
+.wish-framed-card{position:relative;width:100%;max-width:480px;aspect-ratio:1122/1402;container-type:inline-size;margin:auto;isolation:isolate;color:#ffe4a1}
+.wish-frame-background{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:-1}
+.wish-framed-boat{position:absolute;left:0;top:calc(28% + 20px);width:100%;height:32%;object-fit:contain;filter:drop-shadow(0 9px 10px #ffb22c33)}
+.wish-framed-card>blockquote{position:absolute;inset:64% 13% auto;height:16.5%;display:flex;align-items:center;justify-content:center;margin:0;color:#ffe4a1;font:500 4.6cqw/1.65 var(--serif);text-shadow:0 2px 5px #000;white-space:pre-wrap;overflow-wrap:anywhere;overflow:auto}
+.wish-framed-card>blockquote.is-long{font-size:3.3cqw;line-height:1.65}
+.wish-framed-card>.wish-framed-author{position:absolute;inset:81% 17% auto;margin:0;font:500 3.2cqw/1.6 var(--serif);color:#ffe4a1;overflow-wrap:anywhere}
+.wish-framed-card>.wish-framed-pending{position:absolute;inset:66% 15% auto;color:#ffe4a1;font:4cqw/1.8 var(--serif)}
+.wish-card-actions{min-width:0;padding:32px 0 12px}
+.wish-dialog .wish-dialog-design{margin:12px 0 24px;color:#e6c783}
+.wish-dialog .wish-dialog-kicker{margin-inline:0;color:#f0c76c}
+.wish-dialog .wish-download-button{width:100%;min-height:48px;margin:0 0 22px;font-size:15px;justify-content:center}
+.wish-dialog .wish-sharing{padding-top:22px;border-color:#cfa76466}
+.wish-dialog-content>.creator-close{z-index:3;top:12px;right:12px;background:#fff8e9;border:1px solid #c99131;color:#20324c}
+@media(min-width:761px){.wish-dialog{position:fixed;inset:0;margin:auto}.wish-dialog-content{grid-template-columns:minmax(0,min(480px,calc((100dvh - 86px)*.8))) minmax(260px,1fr)}}
+@media(max-width:760px){.wish-dialog{inset:0;margin:auto;width:calc(100vw - 20px);max-height:calc(100dvh - 20px);border-radius:20px}.wish-dialog-content{display:flex;flex-direction:column;gap:8px;padding:40px 12px 20px}.wish-framed-card{max-width:440px;flex:none}.wish-card-actions{width:100%;padding:18px 6px 0}.wish-dialog .wish-download-button{font-size:15px}.wish-dialog-content>.creator-close{top:7px;right:7px;width:32px;height:32px}}
+/* Live creation preview uses the same card as the river detail dialog. */
+.festival-page .framed-creator{width:min(1000px,calc(100vw - 32px));height:auto;max-height:calc(100dvh - 32px);border:2px solid #d7a149;border-radius:24px;background:linear-gradient(135deg,#fffaf0,#f4e8d3)}
+.framed-creator .creator-content{padding:22px;position:relative}
+.framed-creator form{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start;padding:0}
+.creator-card-preview{min-width:0;position:sticky;top:0}
+.creator-editor{min-width:0;padding-top:14px}
+.creator-editor>.hero-gold-ornament{margin:0 auto 10px;width:65%;height:24px}
+.framed-creator .creator-editor h2{position:static;margin:0 25px 8px 0;padding:0;border:0;background:none;text-align:center;font:700 25px/1.5 var(--serif);color:#102a4c}
+.framed-creator .creator-editor #creator-description{display:block;font-size:12px;text-align:center;line-height:1.8;padding-bottom:14px;margin-bottom:14px}
+.framed-creator .creator-designs{margin-bottom:18px}
+.framed-creator .creator-designs legend{display:block;font-size:14px}
+.framed-creator .creator-design-grid{grid-template-columns:repeat(5,minmax(0,1fr));max-width:none;max-height:160px;overflow-y:auto;padding:3px;margin:8px 0 0;gap:6px}
+.framed-creator .creator-design-grid>button{min-height:52px}
+.framed-creator .creator-cycle{display:flex;align-items:center;justify-content:space-between;margin:8px 0;font-size:12px}
+.framed-creator .creator-cycle>span{display:flex;gap:10px;align-items:center}
+.framed-creator .creator-cycle button{border:1px solid #c9a668;background:#fff7e5;color:#7a5519;border-radius:50%;width:30px;height:30px;cursor:pointer}
+.framed-creator .creator-content input:not([type=checkbox]),.framed-creator .creator-content textarea{font-size:14px;padding:9px 12px}
+.framed-creator .creator-content textarea{height:82px;min-height:82px}
+.framed-creator .creator-submit{display:block;width:100%;font-size:16px;min-height:48px}
+.framed-creator .creator-close{position:absolute;top:10px;right:10px;z-index:6;width:34px;height:34px}
+@media(max-width:760px){.festival-page .framed-creator{inset:0;margin:auto;width:calc(100vw - 20px);height:auto;max-height:calc(100dvh - 20px);border-radius:20px}.framed-creator .creator-content{padding:44px 14px 20px}.framed-creator form{display:flex;flex-direction:column;gap:18px;padding:0}.creator-card-preview{position:static;width:100%}.creator-editor{width:100%;padding:0}.framed-creator .creator-content input:not([type=checkbox]),.framed-creator .creator-content textarea{font-size:16px}.framed-creator .creator-content textarea{height:110px}.framed-creator .creator-content h2{margin-right:0;font-size:22px}.framed-creator .creator-design-grid{max-height:190px}.framed-creator .creator-privacy{margin-block:16px}.framed-creator .creator-close{position:absolute;top:8px;right:8px}}
+.wish-framed-card{text-align:center}
+@media(min-width:761px) and (max-height:800px){.framed-creator .creator-editor{padding-top:4px}.framed-creator .creator-design-grid{max-height:110px}.framed-creator .creator-designs{margin-bottom:12px}.framed-creator .creator-hint{margin:4px 0 9px;font-size:9px}.framed-creator .creator-content textarea{height:68px;min-height:68px}.framed-creator .creator-editor>.hero-gold-ornament{height:18px;margin-bottom:5px}.framed-creator .creator-editor #creator-description{padding-bottom:9px;margin-bottom:10px}}
+.wish-framed-card>blockquote.is-long{font-size:3.7cqw}
+.wish-framed-card>blockquote.is-extra-long{font-size:3cqw}
+.framed-creator .wish-count-exceeded{color:#ab3024;font-weight:700}.framed-creator textarea[aria-invalid=true]{border-color:#ab3024}.framed-creator .creator-submit:disabled{opacity:.5;cursor:not-allowed}
+.wish-framed-card>.wish-framed-author{display:flex;align-items:center;justify-content:center;gap:2cqw;white-space:nowrap;overflow-wrap:normal}
+.wish-framed-author:before,.wish-framed-author:after{content:"";display:block;width:6cqw;height:1px;flex:1 0 2cqw;max-width:6cqw;background:linear-gradient(90deg,transparent,#ffe4a1)}
+.wish-framed-author:after{transform:scaleX(-1)}
+.wish-framed-author>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wish-framed-card>.wish-framed-author.is-long-name{font-size:2.6cqw}
+.wish-framed-card>blockquote{overflow:hidden}
+@media(max-width:480px){.framed-creator .creator-label-row{flex-wrap:wrap;gap:4px}.framed-creator #wish-word-count{font-size:10px}}
+/* Province listings use the full card width for event information. */
+.festival-page .province-card{grid-template-columns:minmax(0,1fr)}
+.festival-page .province-content{width:100%}
+.event-province-banner{height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:radial-gradient(ellipse at 50% 65%,#dca83722,transparent 65%),linear-gradient(150deg,#123e70,#031b3b);color:#f5ce78;text-align:center;padding:30px 45px}
+.event-province-banner>svg{width:92px;height:66px;stroke:currentColor;stroke-width:1.2}
+.event-province-banner>p{font:700 28px/1.5 var(--serif);margin:0;overflow-wrap:anywhere}
+@media(max-width:760px){.event-province-banner{height:180px}.event-province-banner>svg{width:72px;height:52px}.event-province-banner>p{font-size:24px}}
+.framed-creator .creator-design-grid{max-height:none;overflow:visible}
+.framed-creator .creator-design-grid>button{aspect-ratio:auto;height:66px;min-height:0}
+.reference-wish-card>img,.festival-online-icon{animation:wish-card-water-bob 7s ease-in-out infinite;will-change:transform}
+.reference-wish-card:nth-child(2n)>img{animation-duration:8.5s;animation-delay:-2s}.reference-wish-card:nth-child(3n)>img{animation-duration:9.3s;animation-delay:-4s}
+@keyframes wish-card-water-bob{0%,100%{transform:translate(-2px,2px) rotate(-1deg)}50%{transform:translate(3px,-5px) rotate(1deg)}}
+.wish-card-open{position:absolute;inset:0;z-index:2;width:100%;height:100%;border:0;border-radius:inherit;background:transparent;cursor:pointer}
+.reference-wish-card:has(.wish-card-open:focus-visible){outline:3px solid #dca93e;outline-offset:4px}
+.reference-wish-card:hover{border-color:#f4cb71;box-shadow:0 6px 20px #122c5433}
+@media(prefers-reduced-motion:reduce){.reference-wish-card>img,.festival-online-icon{animation:none;will-change:auto}}
+.wish-framed-boat{animation:framed-krathong-water-bob 7.5s ease-in-out infinite;transform-origin:50% 85%;will-change:transform}
+@keyframes framed-krathong-water-bob{0%,100%{transform:translateY(2px) rotate(-.5deg)}50%{transform:translateY(-4px) rotate(.5deg)}}
+@media(prefers-reduced-motion:reduce){.wish-framed-boat{animation:none;will-change:auto}}
+.wish-framed-reflection{position:absolute;left:0;top:calc(28% + 20px);width:100%;height:32%;object-fit:contain;transform:scaleY(-.16);transform-origin:50% 100%;opacity:.234;filter:blur(.5px);mask-image:linear-gradient(to bottom,transparent 20%,#000);pointer-events:none;animation:framed-water-reflection 7.5s ease-in-out infinite;will-change:transform}
+@keyframes framed-water-reflection{0%,100%{transform:translateY(2px) scaleY(-.16) rotate(-.5deg)}50%{transform:translateY(-4px) scaleY(-.16) rotate(.5deg)}}
+@media(prefers-reduced-motion:reduce){.wish-framed-reflection{animation:none;will-change:auto}}
+.wish-framed-card:before,.wish-framed-card:after{content:"";position:absolute;pointer-events:none;left:31%;top:calc(60% + 15px);width:38%;height:12px;border:1px solid #edce7c66;border-radius:50%;box-shadow:0 0 6px #dfbe4a18;opacity:0;animation:framed-water-ripple 6.5s ease-out infinite}
+.wish-framed-card:after{animation-delay:-3.25s;border-color:#9fc7e433;height:9px;top:calc(60% + 17px)}
+@keyframes framed-water-ripple{0%{transform:scale(.8,.65);opacity:0}20%{opacity:.52}100%{transform:scale(1.5,1.3);opacity:0}}
+@media(prefers-reduced-motion:reduce){.wish-framed-card:before,.wish-framed-card:after{animation:none;opacity:.195}}
+.wish-qr-sharing{display:flex;align-items:center;justify-content:center;gap:22px;margin:12px 0 18px}
+.wish-qr-link{display:flex;flex-direction:column;align-items:center;gap:7px;text-decoration:none;color:#7c622f;font:11px/1.6 var(--sans)}
+.wish-qr-code{display:block;width:142px;height:142px;border:1px solid #d7c699;border-radius:8px;background:white}
+.wish-copy-link>a{display:block;flex:1;min-width:0;padding:10px;border:1px solid #ded7c9;border-radius:8px;background:#f3eee3;color:#1d4c79;font:11px/1.6 var(--sans);overflow-wrap:anywhere;text-align:left;text-decoration:underline}
+.wish-qr-sharing .wish-share-buttons button:first-child{color:#16854e}
+.wish-dialog #wish-dialog-title{color:#fff5dc}
+.wish-dialog .wish-sharing>p,.wish-dialog .wish-qr-link{color:#e6c783}
+.wish-dialog .wish-sharing>small,.wish-dialog .wish-dialog-pending{color:#bccce0}
+.wish-dialog .wish-sharing .wish-share-message{color:#9ee3bf}
+.wish-dialog .wish-copy-link>a{background:#071b37;border-color:#b28c4966;color:#e7ce94}
+.wish-dialog .wish-copy-link button{background:#224b75;color:#fff5dc;border:1px solid #b28c4966}
+.wish-dialog-content>.creator-close{background:#102e53;color:#f6d38b}
+.festival-page .province-card{padding:20px;min-height:280px}
+.festival-page .province-card .province-region{font-size:14px;line-height:1.7}
+.festival-page .province-card h3{font-size:30px;line-height:1.5;margin:3px 0 10px;letter-spacing:0}
+.festival-page .province-event-name{font-size:18px;line-height:1.8;margin-bottom:14px}
+.festival-page .event-meta{font-size:16px;line-height:1.85;margin-bottom:9px;gap:10px}
+.festival-page .event-meta>span{font-size:19px;line-height:1.5}
+.festival-page .event-detail-button{font-size:16px;line-height:1.6;min-height:44px;padding:8px 18px;margin-top:12px}
+.festival-page .map-selection{display:grid;grid-template-rows:18px 34px 57px 36px;align-content:start;height:196px;min-height:196px;gap:6px}
+.festival-page .map-selection>strong{line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.festival-page .map-selection>span:not(.map-selection-label){display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+@media(max-width:760px){.festival-page .map-selection{height:180px;min-height:180px}}
+@media(max-width:760px){.festival-page .province-card{padding:18px}.festival-page .province-card h3{font-size:28px}.festival-page .province-event-name{font-size:18px}.festival-page .event-meta{font-size:16px}}
+@media(max-width:760px){.wish-qr-code{width:150px;height:150px}.wish-copy-link>a{flex-basis:100%;font-size:13px}.wish-qr-sharing{gap:16px}}

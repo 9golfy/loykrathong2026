@@ -1,0 +1,62 @@
+[
+  {
+    "file": "public/images/hero-layers/wat-arun-skyline-photo.png",
+    "width": 1535,
+    "height": 1024,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      255
+    ]
+  },
+  {
+    "file": "public/images/hero-layers/wat-arun-water-photo.png",
+    "width": 1535,
+    "height": 1024,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ]
+  },
+  {
+    "file": "public/images/hero-layers/foreground-pavilion-couple.png",
+    "width": 1448,
+    "height": 1086,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      255
+    ]
+  },
+  {
+    "file": "public/images/hero-layers/krathong.png",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ]
+  },
+  {
+    "file": "public/images/hero-layers/firework.png",
+    "width": 1263,
+    "height": 1245,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      253
+    ]
+  },
+  {
+    "file": "public/images/hero-layers/lantern.png",
+    "width": 1290,
+    "height": 1219,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      255
+    ]
+  }
+]

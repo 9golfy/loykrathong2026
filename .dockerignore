@@ -1,0 +1,12 @@
+node_modules
+.npm-cache
+.next
+.git
+.env
+.env.*
+!.env.example
+app/generated/prisma
+npm-debug.log
+ADMIN-TEST-LOGIN.local.txt
+.vercel
+test-submissions-*.json

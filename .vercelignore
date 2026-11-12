@@ -1,0 +1,15 @@
+node_modules
+.next
+.npm-cache
+.git
+.env
+.env.*
+!.env.example
+ADMIN-TEST-LOGIN.local.txt
+test-submissions-*.json
+*.log
+coverage
+output
+.agents
+.codex
+*.tsbuildinfo
