@@ -87,5 +87,5 @@ export function getWishCardLayout(
     height: boatHeight,
   };
 
-  return { characterRect, boatRect, boatSize: { width, height } };
+  return { characterRect, boatRect, boatSize: { width, height }, boatAnchor: { x: basketCenterX, y: handContactY } };
 }

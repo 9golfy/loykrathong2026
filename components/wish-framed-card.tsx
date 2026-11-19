@@ -49,7 +49,11 @@ export default function WishFramedCard({ designKey, designName, wish, nickname, 
       style={layout ? positionLayer(layout.characterRect) : undefined}
       alt={couple.label} width={couple.width} height={couple.height} sizes="(max-width:760px) 48vw, 260px" />}
     <Image className="wish-framed-boat" src={design.image} alt={designName}
-      style={layout ? positionLayer(layout.boatRect) : undefined}
+      data-color-lotus={design.key.startsWith("lotus-color-")}
+      style={layout ? {
+        ...positionLayer(layout.boatRect),
+        transformOrigin: (layout.boatAnchor.x * 100) + "% " + (layout.boatAnchor.y * 100) + "%",
+      } : undefined}
       width={layout?.boatSize.width ?? 560} height={layout?.boatSize.height ?? 360}
       sizes={layout ? "(max-width:760px) 35vw, 180px" : undefined} />
     {!couple && <Image className="wish-framed-reflection" src={design.image} alt="" aria-hidden="true" width={560} height={360} />}
