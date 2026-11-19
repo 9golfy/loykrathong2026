@@ -27,6 +27,20 @@ const handPositions: Record<string, Point> = {
   "siwalai": [0.64, 0.835],
 };
 
+const soloCharacterBounds: Record<string, readonly [top: number, bottom: number]> = {
+  "amarin": [0.123288, 0.889690],
+  "royal-shirt-orange": [0.082192, 0.909877],
+  "royal-shirt-blue": [0.082913, 0.908435],
+  "royal-shirt-short": [0.082913, 0.918529],
+  "chakkraphat": [0.130497, 0.897621],
+  "chakkri": [0.129056, 0.894737],
+  "chitralada": [0.126893, 0.896179],
+  "dusit": [0.130497, 0.894737],
+  "boromphiman": [0.118241, 0.901947],
+  "rueanton": [0.126172, 0.898342],
+  "siwalai": [0.102379, 0.901947],
+};
+
 // Opaque bounds and basket center measured from the transparent design assets.
 const boatSilhouettes: Record<string, BoatSilhouette> = {
   "lotus": [1000, 914, 0.805, 0.5, 0.009, 0.978, 0.923],
@@ -66,18 +80,24 @@ export function getWishCardLayout(
   const { width: cardWidth, height: cardHeight } = wishCardSize;
   const characterBoxHeight = cardHeight * (artOnly ? .44 : .34);
   const characterScale = Math.min(cardWidth * .54 / character.width, characterBoxHeight / character.height);
-  const characterWidth = character.width * characterScale;
-  const characterHeight = character.height * characterScale;
+  const nominalCharacterHeight = character.height * characterScale;
+  const bounds = soloCharacterBounds[character.key];
+  const referenceHeight = Math.min(cardWidth * .54, characterBoxHeight);
+  const characterHeight = bounds ? referenceHeight * .97 / (bounds[1] - bounds[0]) : nominalCharacterHeight;
+  const characterWidth = character.width / character.height * characterHeight;
+  const characterTop = cardHeight * (artOnly ? .32 : .27) + (characterBoxHeight - referenceHeight) / 2;
   const characterRect = {
     left: cardWidth * .515 - characterWidth / 2,
-    top: cardHeight * (artOnly ? .32 : .27) + (characterBoxHeight - characterHeight) / 2,
+    top: bounds
+      ? characterTop + referenceHeight * .985 - bounds[1] * characterHeight
+      : cardHeight * (artOnly ? .32 : .27) + (characterBoxHeight - characterHeight) / 2,
     width: characterWidth,
     height: characterHeight,
   };
 
   const [width, height, opaqueWidth, basketCenterX, opaqueTop, opaqueBottom, handContactY] = silhouette;
   const opaqueHeight = opaqueBottom - opaqueTop;
-  const boatScale = Math.min(characterHeight * .64 / (width * opaqueWidth), characterHeight * .53 / (height * opaqueHeight));
+  const boatScale = Math.min(nominalCharacterHeight * .64 / (width * opaqueWidth), nominalCharacterHeight * .53 / (height * opaqueHeight));
   const boatWidth = width * boatScale;
   const boatHeight = height * boatScale;
   const boatRect = {
