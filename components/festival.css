@@ -232,7 +232,7 @@
 .framed-creator .creator-card-download{width:100%;min-height:42px;margin:8px 0 0;justify-content:center}
 .wish-framed-card>blockquote{position:absolute;inset:64% 13% auto;height:16.5%;display:flex;align-items:center;justify-content:center;margin:0;color:#ffe4a1;font:500 4.6cqw/1.65 var(--serif);text-shadow:0 2px 5px #000;white-space:pre-wrap;overflow-wrap:anywhere;overflow:auto}
 .wish-framed-card>blockquote.is-long{font-size:3.3cqw;line-height:1.65}
-.wish-framed-card>.wish-framed-author{position:absolute;inset:81% 17% auto;margin:0;font:500 3.2cqw/1.6 var(--serif);color:#ffe4a1;overflow-wrap:anywhere}
+.wish-framed-card>.wish-framed-author{position:absolute;inset:calc(81% - 10px) 17% auto;margin:0;font:500 3.2cqw/1.6 var(--serif);color:#ffe4a1;overflow-wrap:anywhere}
 .wish-framed-card>.wish-framed-pending{position:absolute;inset:66% 15% auto;color:#ffe4a1;font:4cqw/1.8 var(--serif)}
 .wish-card-actions{min-width:0;padding:32px 0 12px}
 .wish-dialog .wish-dialog-design{margin:12px 0 24px;color:#e6c783}
@@ -327,4 +327,5 @@
 @media(max-width:760px){.festival-page .province-card{padding:18px}.festival-page .province-card h3{font-size:28px}.festival-page .province-event-name{font-size:18px}.festival-page .event-meta{font-size:16px}}
 @media(max-width:760px){.wish-qr-code{width:150px;height:150px}.wish-copy-link>a{flex-basis:100%;font-size:13px}.wish-qr-sharing{gap:16px}}
 
+.wish-framed-card.has-pier-couple .wish-framed-boat[data-color-lotus="true"]{transform:scale(.7)}
 @media(max-width:760px){.wish-framed-card.has-pier-couple .wish-framed-boat[data-color-lotus="true"]{transform:scale(.66)}}
