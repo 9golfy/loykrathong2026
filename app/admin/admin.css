@@ -14,3 +14,12 @@
 .admin-event-row summary strong{margin-right:12px;color:#254f70}
 .admin-event-row summary span{overflow-wrap:anywhere}
 .admin-event-row .admin-content-form{border:0;margin:0;padding-top:6px}
+.admin-row-actions .admin-delete {
+  background: #fff1f0;
+  border-color: #edb9b5;
+  color: #902e27;
+}
+
+.admin-row-actions .admin-delete:hover:enabled {
+  background: #ffe4e1;
+}

@@ -86,12 +86,71 @@
 .hero-sky-lantern{position:absolute;left:var(--lantern-x);top:0;width:var(--lantern-size);aspect-ratio:2/3;animation:hero-lantern-rise var(--lantern-duration) var(--lantern-delay) linear infinite;filter:drop-shadow(0 0 6px #ffb84244)}
 .hero-sky-lantern>img{display:block;width:100%;height:100%;object-fit:contain;animation:hero-lantern-sway 6.5s var(--lantern-delay) ease-in-out infinite alternate}
 /* Foreground stays attached to the lower left, above the moving river. */
-.hero-foreground-group{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden;--couple-width:min(clamp(700px,53.2vw,840px),calc((100svh - var(--festival-header-height)) * 1.02));--couple-left:-12px;--couple-bottom:4px}
-.hero-couple-layer{position:absolute;z-index:4;left:var(--couple-left);bottom:var(--couple-bottom);width:var(--couple-width);filter:drop-shadow(0 8px 12px #00133833)}
-.hero-couple-layer>img{display:block;width:100%;height:auto}
+.hero-foreground-group{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden;--pavilion-frame-width:min(clamp(700px,53.2vw,840px),calc((100svh - var(--festival-header-height)) * 1.02));--pavilion-left:-12px;--pavilion-bottom:4px}
+.hero-pavilion-layer{position:absolute;z-index:4;left:var(--pavilion-left);bottom:var(--pavilion-bottom);width:calc(var(--pavilion-frame-width) * .6);filter:drop-shadow(0 8px 12px #00133833)}
+.hero-pavilion-layer>img{display:block;width:100%;height:auto}
+.hero-pier-picker{
+  position:absolute;
+  left:54%;
+  bottom:max(13%,54px);
+  width:60%;
+  aspect-ratio:1;
+  translate:-50% 0;
+}
+.hero-pier-couple{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  opacity:0;
+  transition:opacity .22s ease;
+}
+.hero-pier-couple[data-active="true"]{opacity:1}
+.hero-pier-couple[data-solo="true"]{transform:translateY(11%) scale(1.22);transform-origin:center bottom}
+.hero-pier-arrow{
+  position:absolute;
+  top:50%;
+  width:44px;
+  height:44px;
+  padding:0;
+  border:0;
+  border-radius:10px;
+  background:transparent url('/images/hero-layers/pier-arrows.png') no-repeat;
+  background-size:200% auto;
+  filter:drop-shadow(0 2px 3px #071b50);
+  translate:0 -50%;
+  cursor:pointer;
+  pointer-events:auto;
+}
+.hero-pier-arrow.is-previous{left:-26px;background-position:left center}
+.hero-pier-arrow.is-next{right:-26px;background-position:right center}
+.hero-pier-arrow:hover{filter:brightness(1.16) drop-shadow(0 2px 3px #071b50)}
+.hero-pier-arrow:focus-visible{outline:2px solid #ffe08b;outline-offset:2px}
+.hero-pier-create{
+  position:absolute;
+  top:calc(100% + 4px);
+  left:50%;
+  translate:-50% 0;
+  min-height:44px;
+  padding:5px 14px;
+  border:1px solid #dfa334;
+  border-radius:10px;
+  background:var(--festival-gold-button-fill);
+  color:#332001;
+  box-shadow:0 2px 6px #27170d66;
+  font:700 clamp(12px,2.7vw,16px)/1.4 var(--serif);
+  white-space:nowrap;
+  cursor:pointer;
+  pointer-events:auto;
+}
+.hero-pier-create:hover{filter:brightness(1.08)}
+.hero-pier-create:focus-visible{outline:2px solid #fff0be;outline-offset:2px}
+.hero-pier-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(prefers-reduced-motion:reduce){.hero-pier-couple{transition:none}}
 /* Enlarge the desktop foreground to fill the reference's lower-left frame. */
 @media(min-width:761px){
-  .hero-foreground-group{--couple-width:min(clamp(612.5px,46.55vw,735px),calc((100svh - var(--festival-header-height)) * .8925))}
+  .hero-foreground-group{--pavilion-frame-width:min(clamp(612.5px,46.55vw,735px),calc((100svh - var(--festival-header-height)) * .8925))}
 }
 .festival-page .layered-hero .krathong-river{z-index:4;height:306px;bottom:18px;clip-path:inset(0 0 0 max(0px,calc((100% - 1100px)/2)))}
 .festival-page .layered-hero .river-voyage{left:0;top:var(--lane);width:calc(196px + var(--boat-size-offset,0px));z-index:1;animation:none!important;visibility:hidden}
@@ -141,7 +200,7 @@
   .hero-firework{width:calc(var(--effect-size) * .55);top:calc(var(--effect-y) * .4);opacity:.85}
   .hero-firework-rocket{height:55px}
   .hero-sky-lantern{width:calc(var(--lantern-size) * .7)}
-  .hero-foreground-group{--couple-width:min(455px,calc((100svh - var(--festival-header-height)) * .85));--couple-left:-20px}
+  .hero-foreground-group{--pavilion-frame-width:min(455px,calc((100svh - var(--festival-header-height)) * .85));--pavilion-left:-20px}
   .festival-page .layered-hero .krathong-river{height:276px;bottom:12px}
   .festival-page .layered-hero .river-voyage{left:0;width:calc(154px + var(--boat-size-offset,0px));top:var(--lane)}
   .festival-page .layered-hero .river-boat{width:100%}
@@ -159,7 +218,7 @@
   .festival-page .layered-hero .reference-hero-copy>p:not(.hero-overline){font-size:11px;margin-bottom:10px}
   .festival-hero-layers{--scene-shore:76cqh}
 }
-@media(max-width:370px){.hero-foreground-group{--couple-width:min(420px,calc((100svh - var(--festival-header-height)) * .85));--couple-left:-30px}}
+@media(max-width:370px){.hero-foreground-group{--pavilion-frame-width:min(420px,calc((100svh - var(--festival-header-height)) * .85));--pavilion-left:-30px}}
 @media(prefers-reduced-motion:reduce){
   .festival-hero-layers *,.hero-foreground-group *{animation:none!important}
   .hero-firework-rocket{display:none}
@@ -198,16 +257,29 @@
 
   .festival-hero-layers{
     --scene-shift-x:0px;
-    --scene-shore:max(74cqh,calc(100cqh - var(--hero-art-space) + 170px));
+    --entry-bottom:var(--hero-entry-bottom,calc(100cqh - var(--hero-art-space)));
+    --base-shore:clamp(calc(var(--entry-bottom) + 170px),74cqh,calc(var(--entry-bottom) + 235px));
     /* The spire is 34.7% of the photo height above the shoreline. */
-    --scene-height:min(max(53cqh,calc(100cqw * 854 / 1280)),calc((var(--scene-shore) - 100cqh + var(--hero-art-space) - 24px) / .347));
+    --base-scene-height:min(max(72cqh,calc(100cqw * 854 / 1280)),calc((var(--base-shore) - var(--entry-bottom) - 18px) / .347));
+    --scene-height:calc(var(--base-scene-height) * var(--temple-scale,1));
+    --scene-shore:calc(var(--base-shore) - (var(--base-scene-height) - var(--scene-height)) * .347 - var(--temple-lift,0px));
     --water-photo-height:max(var(--scene-height),calc((100cqh - var(--scene-shore)) / .309));
   }
   .hero-moon-layer{width:clamp(34px,9vw,42px);top:max(54%,calc(100% - var(--hero-art-space) + 24px))}
   .hero-foreground-group{
-    --couple-width:min(74vw,350px,calc((var(--hero-art-space) - 28px) * 4 / 3));
-    --couple-left:-16px;
+    --pavilion-frame-width:min(74vw,350px,calc((var(--hero-art-space) - 28px) * 4 / 3));
+    --pavilion-left:-16px;
   }
+}
+
+@media(max-width:760px){
+  .festival-hero-layers{--temple-scale:.92;--temple-lift:8px}
+  .hero-foreground-group{
+    --pavilion-frame-width:min(94vw,430px,calc((var(--hero-art-space) - 28px) * 1.65));
+  }
+  .hero-pier-picker{width:60%;bottom:calc(max(24%,54px) - 10px)}
+  .hero-pier-arrow.is-previous{left:-8px}
+  .hero-pier-arrow.is-next{right:-8px}
 }
 
 @media(max-width:320px){

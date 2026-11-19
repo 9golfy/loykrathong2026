@@ -181,9 +181,21 @@
   font: 700 clamp(13px, 2.8vw, 16px)/1.35 var(--serif);
   white-space: nowrap;
 }
+.festival-page .wish-create-button-top { display: none; }
+
 @media (max-width: 760px) {
   .festival-entry-layout { width: min(100%, 370px); }
-  .festival-footer-title { grid-column: 1 / -1; }
+  .festival-page .wish-create-button-top {
+    display: inline-flex;
+    margin: 0 0 22px;
+  }
+  .footer-inner {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+  .festival-footer-title { margin-inline: 0; text-align: center; }
 }
 
 /* Expanded festival directory: keep the map separate from the paginated results. */
@@ -204,11 +216,20 @@
 .map-pin{width:24px;height:30px}
 @media(max-width:760px){.map-pin{width:14px;height:18px}}
 /* The selected krathong and its wish share the supplied Thai gold frame. */
-.wish-dialog{width:min(940px,calc(100vw - 32px));max-height:calc(100dvh - 32px);border:2px solid #d7a149;background:linear-gradient(135deg,#061630,#0b2850);color:#fff5dc;border-radius:24px}
+.wish-dialog{width:min(940px,calc(100vw - 32px));max-height:calc(100dvh - 32px);border:2px solid #d7a149;background:#011031;color:#fff5dc;border-radius:24px}
 .wish-dialog-content{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;align-items:center;padding:22px}
 .wish-framed-card{position:relative;width:100%;max-width:480px;aspect-ratio:1122/1402;container-type:inline-size;margin:auto;isolation:isolate;color:#ffe4a1}
 .wish-frame-background{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:-1}
 .wish-framed-boat{position:absolute;left:0;top:calc(28% + 20px);width:100%;height:32%;object-fit:contain;filter:drop-shadow(0 9px 10px #ffb22c33)}
+.wish-framed-card.has-pier-couple{--card-art-offset:9.5%}
+.wish-framed-couple{position:absolute;left:calc(15% + var(--card-art-offset));top:27%;width:54%;height:34%;object-fit:contain}
+.wish-framed-card.has-pier-couple .wish-framed-boat{left:calc(28.5833% + var(--card-art-offset));top:calc(43% - 10px);width:34%;height:21%;animation:none;transform:none;filter:none}
+.wish-framed-card.has-pier-couple::before,.wish-framed-card.has-pier-couple::after{content:none}
+.wish-framed-card.is-art-only .wish-framed-couple{top:32%;height:44%}
+.wish-framed-card.is-art-only.has-pier-couple .wish-framed-boat{top:calc(53% - 10px);height:29%}
+.creator-pier-options{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.creator-pier-options select{max-width:100%;padding:7px 9px;border:1px solid #bf9b57;border-radius:8px;background:#fffaf0;color:#283b50;font:inherit}
+.framed-creator .creator-card-download{width:100%;min-height:42px;margin:8px 0 0;justify-content:center}
 .wish-framed-card>blockquote{position:absolute;inset:64% 13% auto;height:16.5%;display:flex;align-items:center;justify-content:center;margin:0;color:#ffe4a1;font:500 4.6cqw/1.65 var(--serif);text-shadow:0 2px 5px #000;white-space:pre-wrap;overflow-wrap:anywhere;overflow:auto}
 .wish-framed-card>blockquote.is-long{font-size:3.3cqw;line-height:1.65}
 .wish-framed-card>.wish-framed-author{position:absolute;inset:81% 17% auto;margin:0;font:500 3.2cqw/1.6 var(--serif);color:#ffe4a1;overflow-wrap:anywhere}

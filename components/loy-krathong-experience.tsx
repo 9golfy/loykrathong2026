@@ -11,15 +11,23 @@ import KrathongRiver, { type RiverKrathong, type RiverDetailControls } from "@/c
 import Image from "next/image";
 import { thaiNumerals } from "@/lib/thai-numerals";
 import { countWishWords, limitWishInput, MAX_WISH_WORDS, MAX_WISH_LENGTH, MAX_NICKNAME_LENGTH } from "@/lib/wish-limits";
-import { WISHES_PER_PAGE } from "@/lib/wish-pagination";
 import { krathongDesigns as designs, krathongImage } from "@/lib/krathong-designs";
 import { SHOW_FESTIVAL_EVENTS } from "@/lib/festival-events";
+import { pierCouples } from "@/lib/pier-couples";
+import { usePierCouplePreference } from "@/components/use-pier-couple-preference";
+import { downloadCompositeWishCard } from "@/lib/wish-card-image";
 
-type Wish = { id: string; nickname: string; wish: string; shareToken?: string; design: { key: string; emoji: string; name: string }; createdAt: string };
+type Wish = { id: string; nickname: string; wish: string; shareToken?: string; coupleKey?: string | null; design: { key: string; emoji: string; name: string }; createdAt: string };
 type WishPage = { page: number; pageCount: number; submissions: Wish[] };
+
+const newlyPublishedWishKey = "loy-krathong-2026-newly-published-id";
 
 export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: RiverKrathong }) {
   const [selected, setSelected] = useState(designs[0]);
+  const { coupleKey, selectCouple } = usePierCouplePreference();
+  const coupleIndex = pierCouples.findIndex(couple => couple.key === coupleKey);
+  const [downloadingCard, setDownloadingCard] = useState(false);
+  const [downloadMessage, setDownloadMessage] = useState("");
   const [nickname, setNickname] = useState("");
   const [wish, setWish] = useState("");
   const [wishLimitNotice, setWishLimitNotice] = useState("");
@@ -43,9 +51,30 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
   const [scenePaused, setScenePaused] = useState(false);
 
   const creatorRef = useRef<HTMLDialogElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const heroCopyRef = useRef<HTMLDivElement>(null);
   const riverDetailsRef = useRef<RiverDetailControls>(null);
-  const publicationVersion = useRef(0);
   const [creatorOpen, setCreatorOpen] = useState(false);
+
+  function changeCouple(direction: -1 | 1) {
+    const next = (coupleIndex + direction + pierCouples.length) % pierCouples.length;
+    selectCouple(pierCouples[next].key);
+  }
+
+  async function downloadPreview() {
+    const card = creatorRef.current?.querySelector<HTMLElement>(".wish-framed-card");
+    if (!card) return;
+    setDownloadingCard(true);
+    setDownloadMessage("");
+    try {
+      await downloadCompositeWishCard(card);
+      setDownloadMessage("ดาวน์โหลดการ์ดแล้ว");
+    } catch {
+      setDownloadMessage("ดาวน์โหลดไม่สำเร็จ กรุณาลองอีกครั้ง");
+    } finally {
+      setDownloadingCard(false);
+    }
+  }
 
   function cycleDesign(direction: number) {
     const index = designs.findIndex((design) => design.key === selected.key);
@@ -57,6 +86,7 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
     setCompleted(false);
     setMessage("");
     setWishLimitNotice("");
+    setDownloadMessage("");
     creatorRef.current?.showModal();
     setCreatorOpen(true);
   }
@@ -68,6 +98,23 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
   }
 
   useEffect(() => {
+    const hero = heroRef.current;
+    const copy = heroCopyRef.current;
+    if (!hero || !copy) return;
+
+    const measureEntryBottom = () => {
+      const bottom = copy.getBoundingClientRect().bottom - hero.getBoundingClientRect().top;
+      hero.style.setProperty("--hero-entry-bottom", `${Math.ceil(bottom)}px`);
+    };
+
+    const observer = new ResizeObserver(measureEntryBottom);
+    observer.observe(hero);
+    observer.observe(copy);
+    measureEntryBottom();
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (!creatorOpen) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -75,32 +122,45 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
   }, [creatorOpen]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    let refreshing = false;
+    let cancelled = false;
+    let activeRequest: AbortController | null = null;
     async function refreshRiver() {
-      if (refreshing) return;
-      refreshing = true;
-      const version = publicationVersion.current;
+      if (activeRequest) return;
+      const controller = new AbortController();
+      activeRequest = controller;
+      const timeout = window.setTimeout(() => controller.abort(), 10_000);
       try {
-        const response = await fetch(`/api/submissions?page=${wishRequest.page}`, { cache: "no-store", signal: controller.signal });
+        let newlyPublishedId: string | null = null;
+        try { newlyPublishedId = sessionStorage.getItem(newlyPublishedWishKey); } catch { /* Storage can be unavailable. */ }
+        const params = new URLSearchParams({ page: String(wishRequest.page) });
+        if (newlyPublishedId) params.set("fresh", "1");
+        const response = await fetch(`/api/submissions?${params}`, { signal: controller.signal });
         if (!response.ok) throw new Error("Wish feed unavailable");
         const data = await response.json();
-        if (controller.signal.aborted || version !== publicationVersion.current) return;
+        if (cancelled) return;
         if (data.databaseReady === false) throw new Error("Wish feed unavailable");
         setWishPage({ page: data.page, pageCount: data.pageCount, submissions: data.submissions });
         setWishFeedLoaded(true);
         setWishPageError(false);
         if (data.page !== wishRequest.page) setWishRequest({ page: data.page });
-        setRiverKrathongs(data.riverKrathongs ?? []);
+        const krathongs: RiverKrathong[] = data.riverKrathongs ?? [];
+        if (newlyPublishedId) {
+          try { sessionStorage.removeItem(newlyPublishedWishKey); } catch { /* Storage can be unavailable. */ }
+        }
+        const newlyPublished = krathongs.find(item => item.id === newlyPublishedId);
+        setRiverKrathongs(newlyPublished
+          ? [newlyPublished, ...krathongs.filter(item => item.id !== newlyPublished.id)]
+          : krathongs);
       } catch {
-        if (!controller.signal.aborted && version === publicationVersion.current) setWishPageError(true);
+        if (!cancelled) setWishPageError(true);
       } finally {
-        refreshing = false;
+        window.clearTimeout(timeout);
+        activeRequest = null;
       }
     }
     void refreshRiver();
     const timer = window.setInterval(refreshRiver, 15000);
-    return () => { controller.abort(); window.clearInterval(timer); };
+    return () => { cancelled = true; activeRequest?.abort(); window.clearInterval(timer); };
   }, [wishRequest]);
 
   const boats = riverKrathongs.map((item) => ({ ...item, own: myKrathongIds.includes(item.id) }));
@@ -129,26 +189,27 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
       const response = await fetch("/api/submissions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ designKey: selected.key, nickname, wish, isPublic }),
+        body: JSON.stringify({ designKey: selected.key, coupleKey, nickname, wish, isPublic }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "ส่งคำอธิษฐานไม่สำเร็จ");
-      const publishedWish: Wish | null = data.publishedWish;
-      if (publishedWish) {
-        publicationVersion.current += 1;
-        setWishPage(current => current.page === 1 ? {
-          ...current,
-          submissions: [publishedWish, ...current.submissions.filter(item => item.id !== publishedWish.id)].slice(0, WISHES_PER_PAGE),
-        } : current);
-        setWishRequest({ page: 1 });
-        setRiverKrathongs(items => [publishedWish, ...items.filter(item => item.id !== publishedWish.id)].slice(0, 24));
-      }
       setCompleted(true);
       creatorRef.current?.close();
       setCreatorOpen(false);
       const ownIds = [data.submission.id, ...myKrathongIds].slice(0, 24);
       setMyKrathongIds(ownIds);
       try { localStorage.setItem("loy-krathong-2026-own-ids", JSON.stringify(ownIds)); } catch { /* Keep this session usable when storage is unavailable. */ }
+      if (data.publishedWish) {
+        try { sessionStorage.setItem(newlyPublishedWishKey, data.publishedWish.id); } catch { /* The feed is sorted newest first. */ }
+        if (sharedWish) {
+          // A full navigation starts a new river queue without reopening the shared wish.
+          window.location.assign(new URL("/#top", window.location.origin));
+        } else {
+          window.scrollTo({ top: 0, behavior: "instant" });
+          window.location.reload();
+        }
+        return;
+      }
       document.getElementById("top")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "เชื่อมต่อระบบไม่ได้ กรุณาลองใหม่อีกครั้ง");
@@ -165,9 +226,9 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
           <FestivalHeaderControls />
         </div>
       </header>
-      <section className="reference-hero layered-hero" id="top" aria-labelledby="hero-title">
-        <FestivalHeroScene paused={scenePaused || creatorOpen} />
-        <div className="festival-container hero-layout"><div className="reference-hero-copy">
+      <section ref={heroRef} className="reference-hero layered-hero" id="top" aria-labelledby="hero-title">
+        <FestivalHeroScene paused={scenePaused || creatorOpen} coupleIndex={coupleIndex} changeCouple={changeCouple} openCreator={openCreator} />
+        <div className="festival-container hero-layout"><div ref={heroCopyRef} className="reference-hero-copy">
           <p className="hero-overline">กรมส่งเสริมวัฒนธรรมขอเชิญชวน</p>
           <h1 id="hero-title"><span className="hero-title-main">ลอยกระทงออนไลน์</span><span className="hero-title-year">พุทธศักราช ๒๕๖๙</span></h1>
           <div className="hero-gold-ornament"><span/><Lotus /><span/></div>
@@ -194,7 +255,7 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
           </div>
         </div></div>
         {completed && !isPublic && <p className="hero-submission-status" role="status">บันทึกคำอธิษฐานส่วนตัวแล้ว</p>}
-        <KrathongRiver krathongs={boats} onCreate={openCreator} sharedWish={sharedWish} onPauseChange={setScenePaused} controlsRef={riverDetailsRef} paused={creatorOpen} />
+        <KrathongRiver krathongs={boats} sharedWish={sharedWish} onPauseChange={setScenePaused} controlsRef={riverDetailsRef} />
       </section>
 
       <dialog className="creator-dialog framed-creator" ref={creatorRef} aria-labelledby="creator-title" aria-describedby="creator-description" onClose={() => setCreatorOpen(false)} onCancel={(event) => { if (loading) event.preventDefault(); }} onClick={(event) => { if (event.target === event.currentTarget) closeCreator(); }}>
@@ -202,12 +263,18 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
           <button type="button" className="creator-close" onClick={closeCreator} disabled={loading} aria-label="ปิดหน้าต่างสร้างกระทง">×</button>
           <form onSubmit={handleSubmit}>
             <div className="creator-card-preview" aria-label="ตัวอย่างการ์ดคำอธิษฐาน">
-              <WishFramedCard designKey={selected.key} designName={selected.name} wish={wish} nickname={nickname} />
+              <WishFramedCard designKey={selected.key} designName={selected.name} wish={wish} nickname={nickname} coupleKey={coupleKey} />
             </div>
             <div className="creator-editor">
               <div className="hero-gold-ornament"><span/><Lotus/><span/></div>
               <h2 id="creator-title">สร้างการ์ดคำอธิษฐาน</h2>
-              <p id="creator-description">เลือกกระทงและเขียนคำอธิษฐาน ดูตัวอย่างการ์ดได้ทันที</p>
+              <p id="creator-description">เลือกภาพตัวละครและกระทงเพื่อจัดการ์ดของคุณ</p>
+              <label className="creator-pier-options">
+                <span>ภาพตัวละคร</span>
+                <select value={coupleKey} onChange={event => selectCouple(event.target.value)}>
+                  {pierCouples.map(couple => <option key={couple.key} value={couple.key}>{couple.label}</option>)}
+                </select>
+              </label>
             <fieldset className="creator-designs"><legend>เลือกกระทง</legend>
               <div className="creator-cycle"><button type="button" onClick={() => cycleDesign(-1)} aria-label="กระทงแบบก่อนหน้า">←</button><span>{selected.name}</span><button type="button" onClick={() => cycleDesign(1)} aria-label="กระทงแบบถัดไป">→</button></div>
               <div className="creator-design-grid">{designs.map((design) => <button type="button" key={design.key} className={selected.key === design.key ? "is-selected" : ""} aria-label={design.name} aria-pressed={selected.key === design.key} onClick={() => setSelected(design)}><Image src={design.image} alt="" width={68} height={68} /><span className="design-selected-mark" aria-hidden="true">✓</span></button>)}</div>
@@ -226,6 +293,10 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
             <label className="creator-privacy"><input type="checkbox" checked={isPublic} onChange={(event) => setIsPublic(event.target.checked)} /><span>แสดงกระทงต่อสาธารณะ<small>เมื่อเลือกตัวเลือกนี้ ชื่อผู้ส่งและคำอธิษฐานจะเผยแพร่ทันที</small></span></label>
             {message && <p className="form-error" role="alert">{message}</p>}
             <button className="creator-submit" type="submit" disabled={loading || wishOverLimit}>{loading ? "กำลังส่งคำอธิษฐาน…" : "สร้างกระทง"}</button>
+            <button className="gold-button creator-card-download" type="button" disabled={loading || downloadingCard} onClick={downloadPreview}>
+              {downloadingCard ? "กำลังสร้างรูปภาพ…" : "↓ ดาวน์โหลดรูปภาพ PNG"}
+            </button>
+            {downloadMessage && <p role="status">{downloadMessage}</p>}
             </div>
           </form>
         </div>
@@ -234,6 +305,7 @@ export default function LoyKrathongExperience({ sharedWish }: { sharedWish?: Riv
       <section className="reference-wishes" id="wishes" aria-labelledby="wishes-title"><div className="festival-container">
         <div className="section-ornament"><span/><Lotus /><h2 id="wishes-title" tabIndex={-1}>คำอธิษฐานจากสายน้ำ</h2><Lotus /><span/></div>
         <p className="section-description">ฝากความปรารถนาดีลงในกระทง ส่งต่อพลังใจไปกับสายน้ำแห่งความหวัง</p>
+        <button className="gold-button wish-create-button wish-create-button-top" type="button" onClick={openCreator} aria-haspopup="dialog">เขียนคำอธิษฐาน</button>
         {wishPageError && <p className="wish-pagination-error" role="status">โหลดคำอธิษฐานไม่สำเร็จ <button type="button" onClick={() => goToWishPage(wishRequest.page)}>ลองอีกครั้ง</button></p>}
         {!wishPageError && wishes.length === 0 && <p className="wish-feed-status" role="status">{wishFeedLoaded ? "ยังไม่มีคำอธิษฐานที่เผยแพร่" : "กำลังโหลดคำอธิษฐาน…"}</p>}
         {wishes.length > 0 && <div className="reference-wish-grid" aria-busy={changingWishPage}>{wishes.map(item => <article className="reference-wish-card" key={item.id}>

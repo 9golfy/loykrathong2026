@@ -44,6 +44,7 @@ model Submission {
   id             String           @id @default(cuid())
   campaignId     String
   designId       String
+  coupleKey      String?
   nickname       String           @db.VarChar(40)
   wish           String           @db.VarChar(240)
   isPublic       Boolean          @default(true)

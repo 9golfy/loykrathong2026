@@ -1,6 +1,9 @@
+"use client";
+
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { krathongImage } from "@/lib/krathong-designs";
+import { pierCouples } from "@/lib/pier-couples";
 import "./festival-hero-scene.css";
 
 const fireworks = [
@@ -44,7 +47,17 @@ const stars = Array.from({ length: 48 }, (_, index) => ({
 }));
 
 /** Each named layer can move independently without moving the temple or people. */
-export default function FestivalHeroScene({ paused }: { paused: boolean }) {
+export default function FestivalHeroScene({ paused, coupleIndex, changeCouple, openCreator }: {
+  paused: boolean;
+  coupleIndex: number;
+  changeCouple: (direction: -1 | 1) => void;
+  openCreator: () => void;
+}) {
+  const selectedCouple = pierCouples[coupleIndex];
+  const nearbyCouples = [-1, 0, 1].map(offset =>
+    pierCouples[(coupleIndex + offset + pierCouples.length) % pierCouples.length],
+  );
+
   return <><div className={`festival-hero-layers photo-scene${paused ? " is-scene-paused" : ""}`} aria-hidden="true">
     <div className="hero-sky-layer" data-scene-layer="sky" />
     <div className="hero-stars-layer" data-scene-layer="stars">{stars.map((star, index) => <span key={index} style={{ left: star.x, top: star.y, width: star.size, height: star.size, opacity: star.opacity }} />)}</div>
@@ -71,7 +84,31 @@ export default function FestivalHeroScene({ paused }: { paused: boolean }) {
       <span className="hero-firework-rocket" /><Image src="/images/hero-layers/firework.png" alt="" width={512} height={512} sizes="220px" className="hero-firework-burst" />
     </div>)}</div>
     <div className="hero-lanterns-layer" data-scene-layer="yi-peng-lanterns">{lanterns.map((lantern, index) => <div key={index} className="hero-sky-lantern" style={{ "--lantern-x": lantern.x, "--lantern-size": lantern.size, "--lantern-duration": lantern.duration, "--lantern-delay": lantern.delay, "--lantern-drift": lantern.drift } as CSSProperties}><Image src="/images/hero-layers/lantern.png" alt="" width={256} height={384} sizes="64px" /></div>)}</div>
-  </div><div className={`hero-foreground-group${paused ? " is-scene-paused" : ""}`} aria-hidden="true"><div className="hero-couple-layer" data-scene-layer="couple-pavilion-pier"><Image src="/images/hero-layers/foreground-pavilion-couple-held.png" alt="" width={1448} height={1086} sizes="(max-width:760px) 455px, 735px" preload /></div></div></>;
+  </div>
+    <div className={`hero-foreground-group${paused ? " is-scene-paused" : ""}`}>
+      <div className="hero-pavilion-layer" data-scene-layer="pavilion-pier">
+        <Image src="/images/hero-layers/foreground-pavilion-pier.png" alt="" width={1122} height={1402} sizes="(max-width:760px) 273px, 441px" preload />
+        <div className="hero-pier-picker" role="group" aria-label="เลือกภาพตัวละครบนท่าน้ำ"
+          onKeyDown={event => {
+            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+            event.preventDefault();
+            changeCouple(event.key === "ArrowLeft" ? -1 : 1);
+          }}>
+          {nearbyCouples.map(couple => (
+            <Image key={couple.src} className="hero-pier-couple" src={couple.src} alt=""
+              width={couple.width} height={couple.height} sizes="(max-width:760px) 160px, 290px"
+              loading="eager" data-active={couple === selectedCouple} data-solo={!couple.key.endsWith("-pair")} />
+          ))}
+          <button type="button" className="hero-pier-arrow is-previous" aria-label="ภาพก่อนหน้า" onClick={() => changeCouple(-1)} />
+          <button type="button" className="hero-pier-arrow is-next" aria-label="ภาพถัดไป" onClick={() => changeCouple(1)} />
+          <span className="hero-pier-status" role="status">{selectedCouple.label}</span>
+          <button type="button" className="hero-pier-create" onClick={openCreator} aria-haspopup="dialog">
+            เขียนคำอธิษฐาน
+          </button>
+        </div>
+      </div>
+    </div>
+  </>;
 }
 
 

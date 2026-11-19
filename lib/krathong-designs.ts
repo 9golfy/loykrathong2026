@@ -1,15 +1,35 @@
 import { thaiNumerals } from "./thai-numerals";
 
 // Retain existing identifiers so saved wishes keep their database relationships.
-const designKeys = ["lotus", "banana-leaf", "silk", "moonlight", "thai-05", "thai-06", "thai-07", "thai-08", "thai-09", "thai-10"];
+const designKeys = [
+  "lotus", "banana-leaf", "silk", "moonlight", "thai-05", "thai-06", "thai-07", "thai-08", "thai-09", "thai-10",
+  "rice-stalk", "tiered-spire", "coconut-lotus", "flower-boat", "festival-barge",
+];
 
-export const krathongDesigns = designKeys.map((key, index) => ({
+const numberedDesigns = designKeys.map((key, index) => ({
   key,
   name: `กระทงมงคล ${thaiNumerals(String(index + 1).padStart(2, "0"))}`,
   description: "กระทงใบตองประดับดอกบัว กล้วยไม้ มะลิ และดาวเรือง",
   emoji: "🪷", palette: "leaf",
   image: `/images/krathongs/collection-2569/design-${String(index + 1).padStart(2, "0")}.webp`,
 }));
+
+const colorLotuses = [
+  ["pink", "ชมพู"],
+  ["purple", "ม่วง"],
+  ["blue", "น้ำเงิน"],
+  ["cyan", "ฟ้า"],
+  ["lime", "เขียวอ่อน"],
+  ["green", "เขียวเข้ม"],
+] as const;
+
+export const krathongDesigns = [...numberedDesigns, ...colorLotuses.map(([color, label]) => ({
+  key: "lotus-color-" + color,
+  name: "กระทงดอกบัวสี" + label,
+  description: "กระทงดอกบัวสี" + label + " พร้อมเทียนและธูป",
+  emoji: "🪷", palette: color,
+  image: "/images/krathongs/lotus-colors/" + color + ".png",
+}))];
 
 export function isSelectableKrathong(key: string): boolean {
   return krathongDesigns.some(design => design.key === key);

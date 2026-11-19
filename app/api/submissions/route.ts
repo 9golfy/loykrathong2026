@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { isSelectableKrathong, withCurrentKrathong } from "@/lib/krathong-designs";
+import { defaultPierCouple, getPierCouple } from "@/lib/pier-couples";
 import { countWishWords, MAX_WISH_WORDS, MAX_WISH_LENGTH, MAX_NICKNAME_LENGTH } from "@/lib/wish-limits";
 import { WISHES_PER_PAGE } from "@/lib/wish-pagination";
 
@@ -11,7 +12,9 @@ const publicApproved = { campaign: { slug: "loy-krathong-2026" }, isPublic: true
 const newestFirst = [{ createdAt: "desc" }, { id: "desc" }] as const;
 
 export async function GET(request: Request) {
-  const pageParam = new URL(request.url).searchParams.get("page");
+  const { searchParams } = new URL(request.url);
+  const pageParam = searchParams.get("page");
+  const fresh = searchParams.has("fresh");
   const parsedPage = Number(pageParam);
   const requestedPage = Number.isSafeInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
   try {
@@ -25,7 +28,7 @@ export async function GET(request: Request) {
           orderBy: [...newestFirst],
           skip: (page - 1) * WISHES_PER_PAGE,
           take: pageParam === null ? 8 : WISHES_PER_PAGE,
-          select: { id: true, nickname: true, wish: true, shareToken: true, design: { select: { key: true, emoji: true, name: true } }, createdAt: true },
+          select: { id: true, nickname: true, wish: true, shareToken: true, coupleKey: true, design: { select: { key: true, emoji: true, name: true } }, createdAt: true },
         });
         return { count, page, pageCount, submissions: submissions.map(withCurrentKrathong) };
       }, { isolationLevel: "RepeatableRead" }),
@@ -33,17 +36,23 @@ export async function GET(request: Request) {
         where: publicApproved,
         orderBy: [...newestFirst],
         take: 24,
-        select: { id: true, nickname: true, wish: true, shareToken: true, design: { select: { key: true, name: true } } },
+        select: { id: true, nickname: true, wish: true, shareToken: true, coupleKey: true, design: { select: { key: true, name: true } } },
       }),
     ]);
-    return NextResponse.json({ ...wishPage, riverKrathongs: riverKrathongs.map(withCurrentKrathong) });
+    return NextResponse.json({ ...wishPage, riverKrathongs: riverKrathongs.map(withCurrentKrathong) }, {
+      headers: fresh
+        ? { "Cache-Control": "no-store" }
+        : { "Vercel-CDN-Cache-Control": "public, s-maxage=15" },
+    });
   } catch {
-    return NextResponse.json({ count: 0, submissions: [], riverKrathongs: [], databaseReady: false });
+    return NextResponse.json({ count: 0, submissions: [], riverKrathongs: [], databaseReady: false }, {
+      headers: { "Cache-Control": "no-store" },
+    });
   }
 }
 
 export async function POST(request: Request) {
-  let body: { designKey?: unknown; nickname?: unknown; wish?: unknown; isPublic?: unknown };
+  let body: { designKey?: unknown; coupleKey?: unknown; nickname?: unknown; wish?: unknown; isPublic?: unknown };
   try {
     const input: unknown = await request.json();
     if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("Invalid submission");
@@ -55,8 +64,12 @@ export async function POST(request: Request) {
   const nickname = typeof body.nickname === "string" ? body.nickname.trim() : "";
   const wish = typeof body.wish === "string" ? body.wish.trim() : "";
   const designKey = typeof body.designKey === "string" ? body.designKey : "";
+  const couple = getPierCouple(body.coupleKey);
+  if (body.coupleKey != null && !couple) {
+    return NextResponse.json({ error: "กรุณาเลือกภาพตัวละครที่มีในรายการ" }, { status: 400 });
+  }
   if (!isSelectableKrathong(designKey)) {
-    return NextResponse.json({ error: "กรุณาเลือกกระทงจาก ๑๐ แบบที่เปิดให้เลือก" }, { status: 400 });
+    return NextResponse.json({ error: "กรุณาเลือกกระทงจากแบบที่เปิดให้เลือก" }, { status: 400 });
   }
   if (nickname.length > MAX_NICKNAME_LENGTH) {
     return NextResponse.json({ error: "ชื่อผู้ส่งต้องไม่เกิน ๓๐ ตัวอักษรรวมช่องว่าง" }, { status: 400 });
@@ -85,12 +98,13 @@ export async function POST(request: Request) {
       data: {
         campaignId: campaign.id,
         designId: design.id,
+        coupleKey: couple?.key ?? defaultPierCouple.key,
         nickname,
         wish,
         isPublic,
         status: isPublic ? "APPROVED" : "PENDING",
       },
-      select: { id: true, nickname: true, wish: true, shareToken: true, design: { select: { key: true, emoji: true, name: true } }, createdAt: true },
+      select: { id: true, nickname: true, wish: true, shareToken: true, coupleKey: true, design: { select: { key: true, emoji: true, name: true } }, createdAt: true },
     });
     return NextResponse.json({ submission: { id: submission.id }, publishedWish: isPublic ? withCurrentKrathong(submission) : null }, { status: 201 });
   } catch {

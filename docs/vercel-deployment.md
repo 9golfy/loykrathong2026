@@ -30,7 +30,7 @@ npm run db:deploy
 ```
 
 The migration creates the schema. The idempotent seed creates the campaign and
-10 krathong designs, and disables retired choices. It does not import local user posts.
+15 krathong designs, and disables retired choices. It does not import local user posts.
 
 ## Publish and verify
 

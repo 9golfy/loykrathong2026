@@ -19,6 +19,12 @@ export async function logoutAction() {
   redirect("/admin/login");
 }
 
+function revalidateWishPages() {
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/wish/[token]", "page");
+}
+
 export async function moderateAction(form: FormData) {
   await requireAdmin();
   const id = form.get("id");
@@ -34,8 +40,25 @@ export async function moderateAction(form: FormData) {
       data: { status },
     });
   } catch { redirect(`/admin?status=${target}&notice=error`); }
-  revalidatePath("/admin");
-  revalidatePath("/");
-  revalidatePath("/wish/[token]", "page");
+  revalidateWishPages();
   redirect(`/admin?status=${target}&notice=${updated.count ? "saved" : "stale"}`);
+}
+
+export async function deleteSubmissionAction(form: FormData) {
+  await requireAdmin();
+  const id = form.get("id");
+  const filter = form.get("filter");
+  const target = filter === "HIDDEN" || filter === "PENDING" || filter === "PRIVATE" ? filter : "APPROVED";
+  if (typeof id !== "string" || !id || id.length > 100) redirect(`/admin?status=${target}&notice=invalid`);
+
+  try {
+    await prisma.submission.deleteMany({
+      where: { id, campaign: { slug: "loy-krathong-2026" } },
+    });
+  } catch {
+    redirect(`/admin?status=${target}&notice=delete-error`);
+  }
+
+  revalidateWishPages();
+  redirect(`/admin?status=${target}&notice=deleted`);
 }
