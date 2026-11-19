@@ -327,4 +327,4 @@
 @media(max-width:760px){.festival-page .province-card{padding:18px}.festival-page .province-card h3{font-size:28px}.festival-page .province-event-name{font-size:18px}.festival-page .event-meta{font-size:16px}}
 @media(max-width:760px){.wish-qr-code{width:150px;height:150px}.wish-copy-link>a{flex-basis:100%;font-size:13px}.wish-qr-sharing{gap:16px}}
 
-@media(max-width:760px){.wish-framed-card.has-pier-couple .wish-framed-boat[data-color-lotus="true"]{transform:scale(.6)}}
+@media(max-width:760px){.wish-framed-card.has-pier-couple .wish-framed-boat[data-color-lotus="true"]{transform:scale(.66)}}
